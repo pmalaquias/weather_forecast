@@ -1,4 +1,4 @@
-package com.example.weatherforecast.data.local
+package com.pmalaquias.weatherforecast.data.local
 
 import android.Manifest
 import android.annotation.SuppressLint
