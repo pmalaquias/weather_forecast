@@ -1,4 +1,4 @@
-package com.example.weatherforecast.presentation.ui.theme
+package com.pmalaquias.weatherforecast.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

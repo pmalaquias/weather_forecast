@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.weatherforecast"
+    namespace = "com.pmalaquias.weatherforecast"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.weatherforecast"
+        applicationId = "com.pmalaquias.weatherforecast"
         minSdk = 29
         targetSdk = 35
         versionCode = 1
