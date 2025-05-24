@@ -1,3 +1,13 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+// Carrega as propriedades do local.properties
+val localProperties = Properties()
+val localPropsFile = rootProject.file("local.properties") // Acessa o arquivo na raiz do projeto
+if (localPropsFile.exists()) {
+    localProperties.load(FileInputStream(localPropsFile))
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -14,6 +24,8 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+
+        buildConfigField("String", "WEATHER_API_KEY", "\"${localProperties.getProperty("WEATHER_API_KEY", "")}\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,6 +48,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
