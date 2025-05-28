@@ -83,7 +83,7 @@ object PreviewData {
             tempCelcius = 22.5,
             condition = WeatherCondition(
                 text = "Parcialmente Nublado",
-                iconUrl = "https://cdn.weatherapi.com/weather/64x64/day/116.png" 
+                iconUrl = "https://cdn.weatherapi.com/weather/64x64/day/116.png"
             ),
             windKph = 10.2,
             humidity = 65,
