@@ -1,5 +1,6 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Colors
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -37,6 +39,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -107,14 +110,14 @@ fun WeatherAppScreen(
             )
         }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier, contentAlignment = Alignment.Center) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState) // Makes the Column scrollable with pull-to-refresh
-                .padding(16.dp), 
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top 
+            verticalArrangement = Arrangement.Top
         ) {
 
                 when {
@@ -141,9 +144,9 @@ fun WeatherAppScreen(
                     }
 
                     uiState.weatherData != null -> {
-                        Column (
+                        /*Column (
                             modifier = Modifier
-                                .fillMaxSize()
+                                //.fillMaxSize()
                                 .verticalScroll(rememberScrollState()), // Makes the Column scrollable
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Top
@@ -153,7 +156,8 @@ fun WeatherAppScreen(
                                 inputField = inputField,
                             )
                             WeatherDataDisplay(weatherData = uiState.weatherData)
-                        }
+                        }*/
+                        WeatherDataDisplay(weatherData = uiState.weatherData)
                     }
 
                     uiState.isLoading -> {
@@ -193,7 +197,8 @@ fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier)
         viewModel.uiState.collectAsStateWithLifecycle().value
 
     Surface(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
+            .background(color = Color.Red) // Use MaterialTheme colors for background,
     ) {
         WeatherAppScreen(
             uiState = uiState,
