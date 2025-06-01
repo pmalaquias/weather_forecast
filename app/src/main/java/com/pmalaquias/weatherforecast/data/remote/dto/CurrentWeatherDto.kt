@@ -18,10 +18,13 @@ data class CurrentWeatherDto(
     @SerializedName("temp_c") val tempCelcius: Double,
     @SerializedName("temp_f") val tempFahrenheit: Double,
     @SerializedName("condition") val condition: ConditionDto,
-    @SerializedName("wind_kph") val windKph: Double,
     @SerializedName("humidity") val humidity: Int,
+    @SerializedName ("wind_dir") val windDir: String,
+    @SerializedName("wind_kph") val windKph: Double,
     @SerializedName("feelslike_c") val feelslikeCelcius: Double,
-    @SerializedName("uv") val uvIndex: Double,
-    @SerializedName("is_day") val isDay: Int // 1 for day, 0 for night
+    @SerializedName("uv") val uvIndex: Int,
+    @SerializedName("is_day") val isDay: Int, // 1 for day, 0 for night
+    @SerializedName("pressure_mb") val pressureMb: Double,
+    @SerializedName("precip_mm") val precipitationMm: Double
 )
 
