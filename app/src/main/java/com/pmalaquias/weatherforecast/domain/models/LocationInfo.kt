@@ -12,5 +12,8 @@ data class LocationInfo(
     val name: String,
     val region: String,
     val country: String,
-    val localtime: String
+    val localtime: String,
+    val timezoneId: String,
+    val lat: Double,
+    val lon: Double
 )
