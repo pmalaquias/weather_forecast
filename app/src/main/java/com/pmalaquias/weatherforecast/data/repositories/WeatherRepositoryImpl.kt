@@ -143,14 +143,18 @@ class WeatherRepositoryImpl(
             name = dto.location.name,
             region = dto.location.region,
             country = dto.location.country,
-            localtime = dto.location.localtime
+            localtime = dto.location.localtime,
+            timezoneId = dto.location.tzId,
+            lat = dto.location.lat,
+            lon = dto.location.lon,
         )
 
         // Map ConditionDto to WeatherCondition
         val weatherCondition = WeatherCondition(
             text = dto.current.condition.text,
             // Adds "https:" to the icon URL, since the API does not include it
-            iconUrl = "https:${dto.current.condition.iconUrl}"
+            iconUrl = "https:${dto.current.condition.iconUrl}",
+            code = dto.current.condition.code
         )
 
         // Map CurrentWeatherDto to CurrentWeather
@@ -160,7 +164,11 @@ class WeatherRepositoryImpl(
             windKph = dto.current.windKph,
             humidity = dto.current.humidity,
             feelslikeCelcius = dto.current.feelslikeCelcius,
-            isDay = dto.current.isDay
+            isDay = dto.current.isDay,
+            windDir = dto.current.windDir,
+            uv = dto.current.uvIndex,
+            pressureMb = dto.current.pressureMb,
+            precipitationMm = dto.current.precipitationMm,
         )
 
         // Create and return the final WeatherData object with the mapped data
