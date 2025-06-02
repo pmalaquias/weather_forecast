@@ -1,16 +1,23 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen
 
+import com.pmalaquias.weatherforecast.domain.models.ForecastData
 import com.pmalaquias.weatherforecast.domain.models.WeatherData
 
 /**
  * Represents the UI state for the weather screen.
  *
- * @property isLoading Indicates whether the weather data is currently being loaded.
- * @property weatherData The weather data to be displayed, or null if not available.
- * @property errorMessage An optional error message to display if loading fails, or null if there is no error.
+ * @property isLoading Indicates whether the current weather data is being loaded.
+ * @property weatherData The current weather data to display, or null if unavailable.
+ * @property forecastData The forecast weather data to display, or null if unavailable.
+ * @property errorMessage An optional error message for current weather loading failures, or null if no error.
+ * @property isForecastLoading Indicates whether the forecast data is being loaded.
+ * @property forecastErrorMessage An optional error message for forecast loading failures, or null if no error.
  */
 data class WeatherUIState(
     val isLoading: Boolean = false,
     val weatherData: WeatherData? = null,
-    val errorMessage: String? = null
+    val forecastData: ForecastData? = null,
+    val errorMessage: String? = null,
+    val isForecastLoading: Boolean = false,
+    val forecastErrorMessage: String? = null
 )
