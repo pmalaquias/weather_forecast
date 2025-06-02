@@ -1,5 +1,6 @@
 package com.pmalaquias.weatherforecast.domain.repository
 
+import com.pmalaquias.weatherforecast.domain.models.ForecastData
 import com.pmalaquias.weatherforecast.domain.models.WeatherData
 
 /**
@@ -7,4 +8,5 @@ import com.pmalaquias.weatherforecast.domain.models.WeatherData
  */
 interface WeatherRepository {
     suspend fun getCurrentWeatherData(): WeatherData?
+    suspend fun getForecastData(days: Int): ForecastData?
 }
