@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
  */
 class WeatherViewModel(
     application: Application
-): ViewModel() {
+) : ViewModel() {
 
     private val locationProvider = LocationProvider(application.applicationContext)
     private val weatherRepository = WeatherRepositoryImpl(locationProvider)
@@ -43,36 +43,77 @@ class WeatherViewModel(
     }
 
     // Function to fetch the current weather data
-     fun fetchWeather() {
+    fun fetchWeather() {
 
-         _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+        val currentData = _uiState.value.weatherData
 
-         viewModelScope.launch {
-             val result = weatherRepository.getCurrentWeatherData()
-             if (result != null) {
-                 // Success: update the UI state with the weather data
-                 _uiState.update {
-                        it.copy(
-                            isLoading = false,
-                            weatherData = result,
-                            errorMessage = null
-                        )
-                 }
-             }else{
-                 // Error: update the UI state with an error message
-                    _uiState.update {
-                            it.copy(
-                                isLoading = false,
-                                weatherData = null,
-                                errorMessage = "Falha ao buscar dados do tempo. Verifique sua conexão ou tente novamente"
-                            )
-                    }
-             }
-         }
-     }
+        if (currentData == null) {
+            _uiState.update {
+                it.copy(
+                    isInitialLoading = true,
+                    isRefreshing = false,
+                    errorMessage = null
+                )
+            }
+        } else {
+            _uiState.update {
+                it.copy(
+                    isInitialLoading = false,
+                    isRefreshing = true,
+                    errorMessage = null
+                )
+            }
+        }
 
-    fun fetchForecastData(days: Int = 7){
-        _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+
+
+        viewModelScope.launch {
+            val result = weatherRepository.getCurrentWeatherData()
+            if (result != null) {
+                // Success: update the UI state with the weather data
+                _uiState.update {
+                    it.copy(
+                        isInitialLoading = false,
+                        isRefreshing = false,
+                        weatherData = result,
+                        errorMessage = null
+                    )
+                }
+            } else {
+                // Error: update the UI state with an error message
+                _uiState.update {
+                    it.copy(
+                        isInitialLoading = false,
+                        isRefreshing = false,
+                        weatherData = null,
+                        errorMessage = "Falha ao buscar dados do tempo. Verifique sua conexão ou tente novamente"
+                    )
+                }
+            }
+        }
+    }
+
+    fun fetchForecastData(days: Int = 7) {
+
+        val currentData = _uiState.value.forecastData
+
+        if (currentData == null) {
+            _uiState.update {
+                it.copy(
+                    isInitialLoading = true,
+                    isRefreshing = false,
+                    errorMessage = null
+                )
+            }
+        } else {
+            _uiState.update {
+                it.copy(
+                    isInitialLoading = false,
+                    isRefreshing = true,
+                    errorMessage = null
+                )
+            }
+        }
 
         viewModelScope.launch {
             val result: ForecastData? = weatherRepository.getForecastData(days)
@@ -80,7 +121,8 @@ class WeatherViewModel(
                 // Success: update the UI state with the forecast data
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
+                        isInitialLoading = false,
+                        isRefreshing = false,
                         forecastData = result,
                         errorMessage = null
                     )
@@ -89,7 +131,8 @@ class WeatherViewModel(
                 // Error: update the UI state with an error message
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
+                        isInitialLoading = false,
+                        isRefreshing = false,
                         forecastData = null,
                         errorMessage = "Falha ao buscar dados da previsão do tempo. Verifique sua conexão ou tente novamente"
                     )
