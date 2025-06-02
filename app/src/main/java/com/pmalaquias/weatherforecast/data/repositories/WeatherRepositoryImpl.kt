@@ -6,11 +6,16 @@ import com.pmalaquias.weatherforecast.data.local.LocationProvider
 import com.pmalaquias.weatherforecast.data.remote.RetrofitClient
 import com.pmalaquias.weatherforecast.data.remote.dto.WeatherApiResponseDto
 import com.pmalaquias.weatherforecast.data.remote.dto.WeatherApiService
+import com.pmalaquias.weatherforecast.data.remote.dto.forecast.ForecastApiResponseDto
 import com.pmalaquias.weatherforecast.domain.models.CurrentWeather
+import com.pmalaquias.weatherforecast.domain.models.DailyForecast
+import com.pmalaquias.weatherforecast.domain.models.ForecastData
 import com.pmalaquias.weatherforecast.domain.models.LocationInfo
 import com.pmalaquias.weatherforecast.domain.models.WeatherCondition
 import com.pmalaquias.weatherforecast.domain.models.WeatherData
 import com.pmalaquias.weatherforecast.domain.repository.WeatherRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 /**
@@ -41,10 +46,9 @@ class WeatherRepositoryImpl(
 
     private val TAG = "WeatherRepositoryImpl"
 
-    // Define your domain models (e.g., WeatherData, CurrentWeather, LocationInfo)
-    // and a Result class (e.g., sealed class Result<out T> { data class Success ... data class Error ... })
+    
 
-    suspend fun getCurrentWeatherFromApi(): /* Result<WeatherData> */ WeatherApiResponseDto? { // Change to your Result<WeatherData>
+    suspend fun getCurrentWeatherFromApi():  WeatherApiResponseDto? { 
         try {
             val location = locationProvider.getCurrentLocation()
             if (location != null) {
@@ -60,8 +64,7 @@ class WeatherRepositoryImpl(
                 if (response.isSuccessful) {
                     val weatherDataDto = response.body()
                     Log.d("WeatherRepository", "API Response: $weatherDataDto")
-                    // Here you would map weatherDataDto to your domain model WeatherData
-                    // return Result.Success(mappedWeatherData)
+                    
                     return weatherDataDto // Retornando DTO diretamente para este exemplo simples
                 } else {
                     Log.e("WeatherRepository", "API Error: ${response.code()} - ${response.message()}")
@@ -108,7 +111,7 @@ class WeatherRepositoryImpl(
                 if (weatherDto != null) {
                     Log.i(TAG, "API Response successful: ${weatherDto.location.name}")
                     // 6. Map DTO to Domain Model and Return
-                    return mapDtoToDomain(weatherDto)
+                    return withContext(Dispatchers.Default){ mapDtoToDomain(weatherDto) }
                 } else {
                     Log.e(TAG, "API Response body is null.")
                     return null // Empty response body, something went wrong
@@ -121,6 +124,48 @@ class WeatherRepositoryImpl(
         } catch (e: Exception) {
             // 7. Handle General Exceptions (e.g., network error, JSON parsing issue)
             Log.e(TAG, "Exception fetching weather data: ${e.message}", e)
+            return null
+        }
+    }
+
+    override suspend fun getForecastData(days: Int): ForecastData? {
+        try {
+            val deviceLocation = locationProvider.getCurrentLocation()
+            if (deviceLocation != null) {
+                val latLonQuery = "${deviceLocation.latitude},${deviceLocation.longitude}"
+                Log.d(TAG, "Fetching forecast for location: $latLonQuery")
+
+                val response = weatherApiService.getForecastWeather(
+                    apiKey = BuildConfig.WEATHER_API_KEY,
+                    locationQuery = latLonQuery,
+                    days = days,
+                    lang = "pt"
+                )
+
+                if (response.isSuccessful) {
+                    val forecastDto = response.body()
+                    if (forecastDto != null) {
+                        Log.i(TAG, "Forecast API Response successful for: ${forecastDto.location.name}")
+                        // Map the DTO to your domain model and return
+                        return withContext (Dispatchers.Default){ mapForecastDtoToDomain(forecastDto) }
+                    } else {
+                        Log.e(TAG, "Forecast API Response body is null.")
+                        return null
+                    }
+                } else {
+                    Log.e(TAG, "Forecast API Error: ${response.code()} - ${response.message()}")
+                    return null
+                }
+
+            }else{
+                Log.d(TAG, "Device location not available")
+                return null
+            }
+
+
+        }
+        catch (e: Exception) {
+            Log.e(TAG, "Exception fetching forecast data: ${e.message}", e)
             return null
         }
     }
@@ -176,5 +221,38 @@ class WeatherRepositoryImpl(
             location = locationInfo,
             current = currentWeather
         )
+    }
+
+    /**
+     * Maps a [ForecastApiResponseDto] object to a [ForecastData] domain model.
+     *
+     * Iterates through each day in the forecast, converting the DTO fields to the corresponding
+     * domain model fields, including weather conditions, temperature, sunrise/sunset times,
+     * chance of rain, precipitation, UV index, and average humidity.
+     *
+     * @param dto The data transfer object containing the forecast API response.
+     * @return A [ForecastData] object containing a list of [DailyForecast] domain models.
+     */
+    private fun mapForecastDtoToDomain(dto: ForecastApiResponseDto): ForecastData {
+        val dailyForecasts = dto.forecast.forecastDay.map { forecastDayDto ->
+            DailyForecast(
+                date = forecastDayDto.date,
+                maxTempCelcius = forecastDayDto.day.maxTempC,
+                minTempCelcius = forecastDayDto.day.minTempC,
+                avgTempCelcius = forecastDayDto.day.avgTempC,
+                condition = WeatherCondition( // Reutilizando o mapeamento de WeatherCondition
+                    text = forecastDayDto.day.condition.text,
+                    iconUrl = "https:${forecastDayDto.day.condition.iconUrl}", // Adiciona "https:"
+                    code = forecastDayDto.day.condition.code
+                ),
+                sunriseTime = forecastDayDto.astro.sunrise,
+                sunsetTime = forecastDayDto.astro.sunset,
+                chanceOfRain = forecastDayDto.day.dailyChanceOfRain,
+                totalPrecipMm = forecastDayDto.day.totalPrecipMm,
+                uvIndex = forecastDayDto.day.uvIndex,
+                humidity = forecastDayDto.day.avgHumidity // Adicionando um campo de umidade média
+            )
+        }
+        return ForecastData(dailyForecasts = dailyForecasts)
     }
 }
