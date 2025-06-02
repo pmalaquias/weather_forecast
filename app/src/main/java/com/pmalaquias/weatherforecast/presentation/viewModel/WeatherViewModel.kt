@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pmalaquias.weatherforecast.data.local.LocationProvider
 import com.pmalaquias.weatherforecast.data.repositories.WeatherRepositoryImpl
+import com.pmalaquias.weatherforecast.domain.models.ForecastData
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.WeatherUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,21 +14,17 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel responsible for managing the state of the weather forecast screen.
+ * ViewModel responsible for managing and providing weather and forecast data to the UI.
  *
- * @param application Application instance used to obtain the context.
+ * @param application The Application context used for location and repository initialization.
  *
- * This ViewModel uses a LocationProvider to get the user's current location
- * and a WeatherRepositoryImpl to fetch weather forecast data.
- *
- * Properties:
- * - [_uiState]: Internal Flow that stores the current state of the weather forecast screen.
- * - [uiState]: Flow exposed for observing the screen state.
- *
- * Features:
- * - Automatically fetches weather forecast data when initialized.
- * - The [fetchWeather] function retrieves weather forecast data,
- *   updating the screen state according to the result (success or error).
+ * This ViewModel:
+ * - Initializes a [LocationProvider] and [WeatherRepositoryImpl] to fetch weather data.
+ * - Exposes a [StateFlow] of [WeatherUIState] to represent the UI state, including loading, error, and data.
+ * - Automatically fetches current weather and forecast data upon initialization.
+ * - Provides [fetchWeather] to retrieve current weather and update the UI state accordingly.
+ * - Provides [fetchForecastData] to retrieve weather forecast for a specified number of days (default is 7).
+ * - Handles loading and error states, updating the UI state with appropriate messages.
  */
 class WeatherViewModel(
     application: Application
@@ -42,6 +39,7 @@ class WeatherViewModel(
 
     init {
         fetchWeather()
+        fetchForecastData()
     }
 
     // Function to fetch the current weather data
@@ -72,4 +70,31 @@ class WeatherViewModel(
              }
          }
      }
+
+    fun fetchForecastData(days: Int = 7){
+        _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+
+        viewModelScope.launch {
+            val result: ForecastData? = weatherRepository.getForecastData(days)
+            if (result != null) {
+                // Success: update the UI state with the forecast data
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        forecastData = result,
+                        errorMessage = null
+                    )
+                }
+            } else {
+                // Error: update the UI state with an error message
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        forecastData = null,
+                        errorMessage = "Falha ao buscar dados da previsão do tempo. Verifique sua conexão ou tente novamente"
+                    )
+                }
+            }
+        }
+    }
 }
