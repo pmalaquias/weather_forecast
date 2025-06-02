@@ -21,6 +21,6 @@ data class AstroDto (
     @SerializedName("moonset") val moonset: String,
     @SerializedName("moon_phase") val moonPhase: String,
     @SerializedName("moon_illumination") val moonIllumination: String,
-    @SerializedName("is_sun_up") val isSunUp: Boolean,
-    @SerializedName("is_moon_up") val isMoonUp: Boolean
+    @SerializedName("is_sun_up") val isSunUp: Int,
+    @SerializedName("is_moon_up") val isMoonUp: Int
 )
