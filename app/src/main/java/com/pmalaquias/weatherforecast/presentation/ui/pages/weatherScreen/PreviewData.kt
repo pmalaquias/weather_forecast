@@ -94,12 +94,13 @@ object PreviewData {
     )
 
 
-    val loadingState = WeatherUIState(isLoading = true)
+    val loadingState = WeatherUIState(isInitialLoading = true, errorMessage = null)
 
     val errorState = WeatherUIState(errorMessage = "Falha ao carregar dados (Preview)")
 
     val successState = WeatherUIState(
-        isLoading = false,
+        isInitialLoading = false,
+        isRefreshing = false,
         weatherData = sampleWeatherData,
         forecastData = sampleForecastData,
         errorMessage = null
