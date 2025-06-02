@@ -23,5 +23,7 @@ data class DailyForecast(
     val sunriseTime: String,
     val sunsetTime: String,
     val chanceOfRain: Int?, // Example: 30 for 30% chance. Nullable.
-    val totalPrecipMm: Double // Total precipitation
-)
+    val totalPrecipMm: Double, // Total precipitation
+    val uvIndex: Double, // UV index for the day
+    val humidity: Double, // Humidity percentage
+    )
