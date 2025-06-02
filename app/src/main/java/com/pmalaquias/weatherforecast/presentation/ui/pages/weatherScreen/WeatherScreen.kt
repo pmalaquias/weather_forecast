@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Colors
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -25,7 +22,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.SearchBarValue
 import androidx.compose.material3.Surface
@@ -76,7 +72,7 @@ fun WeatherAppScreen(
     onRetry: () -> Unit,
 ) {
     val pullRefreshState = rememberPullRefreshState(
-        refreshing = uiState.isLoading,
+        refreshing = uiState.isRefreshing,
         onRefresh = { onRetry }
     )
 
@@ -126,7 +122,7 @@ fun WeatherAppScreen(
                     // Unless it is the initial loading and not a refresh.
                     // You can refine this logic, for example, by having an `isInitialLoading`.
 
-                    uiState.errorMessage != null && !uiState.isLoading -> { // Show error only if not reloading
+                    uiState.errorMessage != null && !uiState.isInitialLoading -> { // Show error only if not reloading
                         Column(
                             modifier = Modifier.fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -157,10 +153,12 @@ fun WeatherAppScreen(
                             )
                             WeatherDataDisplay(weatherData = uiState.weatherData)
                         }*/
-                        WeatherDataDisplay(weatherData = uiState.weatherData)
+                        WeatherDataDisplay(
+                            weatherData = uiState.weatherData,
+                            forecastData = uiState.forecastData)
                     }
 
-                    uiState.isLoading -> {
+                    uiState.isInitialLoading -> {
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
@@ -169,9 +167,10 @@ fun WeatherAppScreen(
                         }
                     }
 
-                    !uiState.isLoading && uiState.errorMessage == null -> {
-                        // Empty or initial state without loading action
-                        Text("Puxe para baixo para atualizar ou aguarde os dados do tempo.")
+                    !uiState.isInitialLoading && uiState.errorMessage == null -> {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("Puxe para baixo para atualizar.")
+                        }
                     }
                 }
 
@@ -181,7 +180,7 @@ fun WeatherAppScreen(
         // Pull-to-Refresh Indicator
         // It will be positioned at the top and center of the parent Box
         PullRefreshIndicator(
-            refreshing = uiState.isLoading,
+            refreshing = uiState.isRefreshing,
             state = pullRefreshState,
             modifier = Modifier.align(Alignment.TopCenter)
         )
