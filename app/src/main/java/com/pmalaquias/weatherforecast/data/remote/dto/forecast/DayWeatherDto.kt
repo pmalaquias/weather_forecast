@@ -39,8 +39,8 @@ data class DayWeatherDto (
     @SerializedName ("avgvis_km") val avgVisKm: Double,
     @SerializedName ("avghumidity") val avgHumidity: Double,
     @SerializedName ("uv") val uvIndex: Double,
-    @SerializedName ("daily_chance_of_rain") val dailyChanceOfRain: Double,
-    @SerializedName ("daily_chance_of_snow") val dailyChanceOfSnow: Double,
+    @SerializedName ("daily_chance_of_rain") val dailyChanceOfRain: Int,
+    @SerializedName ("daily_chance_of_snow") val dailyChanceOfSnow: Int,
     @SerializedName("condition") val condition: ConditionDto,
     @SerializedName("daily_will_it_rain") val dailyWillItRain: Int,
     @SerializedName("daily_will_it_snow") val dailyWillItSnow: Int
