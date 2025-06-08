@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components.WeatherDataDisplay
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 import com.pmalaquias.weatherforecast.presentation.viewModel.WeatherViewModel
 import kotlinx.coroutines.launch
@@ -122,7 +123,16 @@ fun WeatherAppScreen(
                     // Unless it is the initial loading and not a refresh.
                     // You can refine this logic, for example, by having an `isInitialLoading`.
 
-                    uiState.errorMessage != null && !uiState.isInitialLoading -> { // Show error only if not reloading
+                    uiState.isInitialLoading -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            LoadingIndicator()
+                        }
+                    }
+
+                    uiState.errorMessage != null /*&& !uiState.isInitialLoading*/ -> { // Show error only if not reloading
                         Column(
                             modifier = Modifier.fillMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
@@ -139,8 +149,36 @@ fun WeatherAppScreen(
                         }
                     }
 
+                    uiState.errorMessage != null -> {
+                        Text(
+                            text = "Erro: ${uiState.errorMessage}",
+                            color = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                        // Botão para tentar novamente
+                        Button(onClick = { onRetry }, modifier = Modifier.padding(top = 8.dp)) {
+                            Text("Tentar Novamente")
+                        }
+                    }
                     uiState.weatherData != null -> {
-                        /*Column (
+                        // Exibe os dados do tempo
+                        WeatherDataDisplay(
+                            weatherData = uiState.weatherData,
+                            forecastData = uiState.forecastData
+                            )
+                    }
+                    else -> {
+                        // Exibe uma mensagem de carregamento ou vazio
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("Puxe para baixo para atualizar.")
+                        }
+                    }
+
+                    /*uiState.weatherData != null -> {
+                        *//*Column (
                             modifier = Modifier
                                 //.fillMaxSize()
                                 .verticalScroll(rememberScrollState()), // Makes the Column scrollable
@@ -152,26 +190,18 @@ fun WeatherAppScreen(
                                 inputField = inputField,
                             )
                             WeatherDataDisplay(weatherData = uiState.weatherData)
-                        }*/
+                        }*//*
                         WeatherDataDisplay(
                             weatherData = uiState.weatherData,
-                            forecastData = uiState.forecastData)
-                    }
+                            //forecastData = uiState.forecastData
+                        )
+                    }*/
 
-                    uiState.isInitialLoading -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            LoadingIndicator()
-                        }
-                    }
-
-                    !uiState.isInitialLoading && uiState.errorMessage == null -> {
+                    /*!uiState.isInitialLoading && uiState.errorMessage == null -> {
                         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                             Text("Puxe para baixo para atualizar.")
                         }
-                    }
+                    }*/
                 }
 
         }
