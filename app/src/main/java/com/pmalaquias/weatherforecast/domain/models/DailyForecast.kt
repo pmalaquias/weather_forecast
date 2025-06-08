@@ -16,14 +16,14 @@ package com.pmalaquias.weatherforecast.domain.models
  */
 data class DailyForecast(
     val date: String,
-    val maxTempCelcius: Double,
-    val minTempCelcius: Double,
-    val avgTempCelcius: Double, // Average temperature might be useful
+    val maxTempCelcius: Double?,
+    val minTempCelcius: Double?,
+    val avgTempCelcius: Double?, // Average temperature might be useful
     val condition: WeatherCondition, // Reusing your existing domain model
     val sunriseTime: String,
     val sunsetTime: String,
     val chanceOfRain: Int?, // Example: 30 for 30% chance. Nullable.
-    val totalPrecipMm: Double, // Total precipitation
-    val uvIndex: Double, // UV index for the day
-    val humidity: Double, // Humidity percentage
+    val totalPrecipMm: Double?, // Total precipitation
+    val uvIndex: Double?, // UV index for the day
+    val humidity: Double?, // Humidity percentage
     )
