@@ -5,19 +5,23 @@ coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.9.0"
+lifecycleRuntimeKtx = "2.9.1"
 activityCompose = "1.10.1"
-composeBom = "2025.05.01"
+composeBom = "2025.06.00"
 playServicesLocation = "21.3.0"
 kotlinxCoroutinesPlayServices = "1.10.2"
 retrofit = "3.0.0"
 converterGson = "3.0.0"
-lifecycleViewmodelKtx = "2.9.0"
-lifecycleViewmodelCompose = "2.9.0"
-lifecycleRuntimeCompose = "2.9.0"
+lifecycleViewmodelKtx = "2.9.1"
+lifecycleViewmodelCompose = "2.9.1"
+lifecycleRuntimeCompose = "2.9.1"
 coilCompose = "2.7.0"
 material = "1.8.2"
 materialIconsExtendedAndroid = "1.7.8"
+graphicsShapes = "1.1.0-alpha01"
+mockk = "1.14.2"
+kotlinxCoroutinesTest = "1.10.2"
+uiTextGoogleFonts = "1.9.0-alpha04"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +48,10 @@ androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lif
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 androidx-material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
 androidx-material-icons-extended-android = { group = "androidx.compose.material", name = "material-icons-extended-android", version.ref = "materialIconsExtendedAndroid" }
+androidx-graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphicsShapes" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
