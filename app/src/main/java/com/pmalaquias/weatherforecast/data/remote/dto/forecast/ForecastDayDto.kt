@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName
 data class ForecastDayDto (
     @SerializedName("date") val date: String,
     @SerializedName("date_epoch") val dateEpoch: Long,
-    @SerializedName("day") val day: DayWeatherDto,
+    @SerializedName("day") val day: DayDetailsDto,
     @SerializedName("astro") val astro: AstroDto,
-    @SerializedName("hour") val hour: List<HourDayDto>
+    @SerializedName("hour") val hour: List<HourDayDto>?
 )

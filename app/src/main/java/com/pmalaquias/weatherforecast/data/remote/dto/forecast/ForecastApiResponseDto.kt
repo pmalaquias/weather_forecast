@@ -13,6 +13,6 @@ import com.pmalaquias.weatherforecast.data.remote.dto.LocationDto
  */
 data class ForecastApiResponseDto(
     @SerializedName("location") val location: LocationDto,
-    @SerializedName("current") val current: CurrentWeatherDto,
+    @SerializedName("current") val current: CurrentWeatherDto?,
     @SerializedName("forecast") val forecast: ForecastDto
 )

@@ -16,15 +16,25 @@ import com.google.gson.annotations.SerializedName
  */
 data class CurrentWeatherDto(
     @SerializedName("temp_c") val tempCelcius: Double,
-    @SerializedName("temp_f") val tempFahrenheit: Double,
+    @SerializedName("temp_f") val tempFahrenheit: Double?, // Pode ser nulável
+    @SerializedName("is_day") val isDay: Int,
     @SerializedName("condition") val condition: ConditionDto,
-    @SerializedName("humidity") val humidity: Int,
-    @SerializedName ("wind_dir") val windDir: String,
+    @SerializedName("wind_mph") val windMph: Double?,
     @SerializedName("wind_kph") val windKph: Double,
+    @SerializedName("wind_degree") val windDegree: Int?,
+    @SerializedName("wind_dir") val windDir: String?, // Nulável se a API pode não enviar
+    @SerializedName("pressure_mb") val pressureMb: Double?, // Nulável
+    @SerializedName("pressure_in") val pressureIn: Double?,
+    @SerializedName("precip_mm") val precipitationMm: Double?, // Nulável
+    @SerializedName("precip_in") val precipitationIn: Double?,
+    @SerializedName("humidity") val humidity: Int,
+    @SerializedName("cloud") val cloud: Int?,
     @SerializedName("feelslike_c") val feelslikeCelcius: Double,
-    @SerializedName("uv") val uvIndex: Double,
-    @SerializedName("is_day") val isDay: Int, // 1 for day, 0 for night
-    @SerializedName("pressure_mb") val pressureMb: Double,
-    @SerializedName("precip_mm") val precipitationMm: Double
+    @SerializedName("feelslike_f") val feelslikeFahrenheit: Double?,
+    @SerializedName("vis_km") val visKm: Double?,
+    @SerializedName("vis_miles") val visMiles: Double?,
+    @SerializedName("uv") val uvIndex: Double, // API usa "uv" para o índice UV
+    @SerializedName("gust_mph") val gustMph: Double?,
+    @SerializedName("gust_kph") val gustKph: Double?
 )
 

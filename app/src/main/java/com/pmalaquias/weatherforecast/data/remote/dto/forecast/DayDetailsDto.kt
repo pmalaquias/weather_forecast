@@ -25,23 +25,17 @@ import com.pmalaquias.weatherforecast.data.remote.dto.ConditionDto
  * @property dailyWillItRain Indicates if it will rain (1) or not (0) during the day.
  * @property dailyWillItSnow Indicates if it will snow (1) or not (0) during the day.
  */
-data class DayWeatherDto (
-    @SerializedName("maxtemp_c") val maxTempC: Double,
-    @SerializedName("mintemp_c") val minTempC: Double,
-    @SerializedName("avgtemp_c") val avgTempC: Double,
-    @SerializedName("maxtemp_f") val maxTempF: Double,
-    @SerializedName("mintemp_f") val minTempF: Double,
-    @SerializedName("avgtemp_f") val avgTempF: Double,
-    @SerializedName("maxwind_mph") val maxWindMph: Double,
+data class DayDetailsDto (
+    @SerializedName("maxtemp_c") val maxTempCelcius: Double,
+    @SerializedName("mintemp_c") val minTempCelcius: Double,
+    @SerializedName("avgtemp_c") val avgTempCelcius: Double,
     @SerializedName("maxwind_kph") val maxWindKph: Double,
     @SerializedName("totalprecip_mm") val totalPrecipMm: Double,
-    @SerializedName("totalsnow_cm") val totalSnowCm: Double,
-    @SerializedName ("avgvis_km") val avgVisKm: Double,
-    @SerializedName ("avghumidity") val avgHumidity: Double,
-    @SerializedName ("uv") val uvIndex: Double,
-    @SerializedName ("daily_chance_of_rain") val dailyChanceOfRain: Int,
-    @SerializedName ("daily_chance_of_snow") val dailyChanceOfSnow: Int,
-    @SerializedName("condition") val condition: ConditionDto,
-    @SerializedName("daily_will_it_rain") val dailyWillItRain: Int,
-    @SerializedName("daily_will_it_snow") val dailyWillItSnow: Int
+    @SerializedName("avghumidity") val avgHumidity: Double,
+    @SerializedName("daily_will_it_rain") val dailyWillItRain: Int?,
+    @SerializedName("daily_chance_of_rain") val dailyChanceOfRain: Int?,
+    @SerializedName("daily_will_it_snow") val dailyWillItSnow: Int?,
+    @SerializedName("daily_chance_of_snow") val dailyChanceOfSnow: Int?,
+    @SerializedName("condition") val condition: ConditionDto, // Reusing your existing ConditionDto
+    @SerializedName("uv") val uvIndex: Double
 )
