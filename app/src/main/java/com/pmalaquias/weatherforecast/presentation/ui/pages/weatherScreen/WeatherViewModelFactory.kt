@@ -3,6 +3,9 @@ package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.pmalaquias.weatherforecast.data.local.LocationProvider
+import com.pmalaquias.weatherforecast.data.repositories.WeatherRepositoryImpl
+import com.pmalaquias.weatherforecast.domain.repository.WeatherRepository
 import com.pmalaquias.weatherforecast.presentation.viewModel.WeatherViewModel
 
 /**
@@ -18,8 +21,13 @@ import com.pmalaquias.weatherforecast.presentation.viewModel.WeatherViewModel
 class WeatherViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WeatherViewModel::class.java)) {
+            val repository: WeatherRepository = WeatherRepositoryImpl(
+                LocationProvider(application.applicationContext)
+            )
             @Suppress("UNCHECKED_CAST")
-            return WeatherViewModel(application) as T
+            return WeatherViewModel(
+                repository
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
