@@ -1,11 +1,12 @@
 package com.pmalaquias.weatherforecast.presentation.viewModel
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pmalaquias.weatherforecast.BuildConfig
 import com.pmalaquias.weatherforecast.data.local.LocationProvider
 import com.pmalaquias.weatherforecast.data.repositories.WeatherRepositoryImpl
 import com.pmalaquias.weatherforecast.domain.models.ForecastData
+import com.pmalaquias.weatherforecast.domain.repository.WeatherRepository
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.WeatherUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,11 +28,11 @@ import kotlinx.coroutines.launch
  * - Handles loading and error states, updating the UI state with appropriate messages.
  */
 class WeatherViewModel(
-    application: Application
+    private val weatherRepository: WeatherRepository
 ) : ViewModel() {
 
-    private val locationProvider = LocationProvider(application.applicationContext)
-    private val weatherRepository = WeatherRepositoryImpl(locationProvider)
+    //private val locationProvider = LocationProvider(application.applicationContext)
+    //private val weatherRepository = WeatherRepositoryImpl(locationProvider)
 
     // Variable to hold the UI state of the weather forecast screen
     private val _uiState = MutableStateFlow(WeatherUIState())
@@ -45,30 +46,13 @@ class WeatherViewModel(
     // Function to fetch the current weather data
     fun fetchWeather() {
 
-        val currentData = _uiState.value.weatherData
-
-        if (currentData == null) {
-            _uiState.update {
-                it.copy(
-                    isInitialLoading = true,
-                    isRefreshing = false,
-                    errorMessage = null
-                )
-            }
-        } else {
-            _uiState.update {
-                it.copy(
-                    isInitialLoading = false,
-                    isRefreshing = true,
-                    errorMessage = null
-                )
-            }
-        }
+        _uiState.update { it.copy(isInitialLoading = true, isRefreshing = false, errorMessage = null) }
 
 
 
         viewModelScope.launch {
-            val result = weatherRepository.getCurrentWeatherData()
+            val apiKey = BuildConfig.WEATHER_API_KEY
+            val result = weatherRepository.getCurrentWeatherData(apiKey)
             if (result != null) {
                 // Success: update the UI state with the weather data
                 _uiState.update {
@@ -95,28 +79,11 @@ class WeatherViewModel(
 
     fun fetchForecastData(days: Int = 7) {
 
-        val currentData = _uiState.value.forecastData
-
-        if (currentData == null) {
-            _uiState.update {
-                it.copy(
-                    isInitialLoading = true,
-                    isRefreshing = false,
-                    errorMessage = null
-                )
-            }
-        } else {
-            _uiState.update {
-                it.copy(
-                    isInitialLoading = false,
-                    isRefreshing = true,
-                    errorMessage = null
-                )
-            }
-        }
+        _uiState.update { it.copy(isInitialLoading = true, isRefreshing = false, errorMessage = null) }
 
         viewModelScope.launch {
-            val result: ForecastData? = weatherRepository.getForecastData(days)
+            val apiKey = BuildConfig.WEATHER_API_KEY
+            val result: ForecastData? = weatherRepository.getForecastData(apiKey, days)
             if (result != null) {
                 // Success: update the UI state with the forecast data
                 _uiState.update {
