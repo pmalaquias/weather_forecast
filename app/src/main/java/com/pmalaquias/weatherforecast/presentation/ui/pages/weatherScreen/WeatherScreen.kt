@@ -1,6 +1,5 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +15,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -35,7 +35,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -131,24 +130,6 @@ fun WeatherAppScreen(
                             LoadingIndicator()
                         }
                     }
-
-                    uiState.errorMessage != null /*&& !uiState.isInitialLoading*/ -> { // Show error only if not reloading
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                text = "Error: ${uiState.errorMessage}",
-                                color = MaterialTheme.colorScheme.error,
-                                modifier = Modifier.padding(16.dp)
-                            )
-                            Button(onClick = onRetry, modifier = Modifier.padding(top = 8.dp)) {
-                                Text("Try Again")
-                            }
-                        }
-                    }
-
                     uiState.errorMessage != null -> {
                         Text(
                             text = "Erro: ${uiState.errorMessage}",
@@ -176,32 +157,6 @@ fun WeatherAppScreen(
                             Text("Puxe para baixo para atualizar.")
                         }
                     }
-
-                    /*uiState.weatherData != null -> {
-                        *//*Column (
-                            modifier = Modifier
-                                //.fillMaxSize()
-                                .verticalScroll(rememberScrollState()), // Makes the Column scrollable
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Top
-                        ){
-                            SearchBar(
-                                state = searchBarState,
-                                inputField = inputField,
-                            )
-                            WeatherDataDisplay(weatherData = uiState.weatherData)
-                        }*//*
-                        WeatherDataDisplay(
-                            weatherData = uiState.weatherData,
-                            //forecastData = uiState.forecastData
-                        )
-                    }*/
-
-                    /*!uiState.isInitialLoading && uiState.errorMessage == null -> {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("Puxe para baixo para atualizar.")
-                        }
-                    }*/
                 }
 
         }
@@ -225,14 +180,37 @@ fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier)
     val uiState =
         viewModel.uiState.collectAsStateWithLifecycle().value
 
-    Surface(
-        modifier = modifier.fillMaxSize()
-            .background(color = Color.Red) // Use MaterialTheme colors for background,
-    ) {
-        WeatherAppScreen(
-            uiState = uiState,
-            onRetry = { viewModel.fetchWeather() },
-        )
+    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            when {
+                uiState.isInitialLoading -> {
+                    CircularProgressIndicator()
+                }
+                uiState.errorMessage != null -> {
+                    Text(
+                        text = "Erro: ${uiState.errorMessage}",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    // Botão para tentar novamente
+                    Button(onClick = { viewModel.fetchWeather() }, modifier = Modifier.padding(top = 8.dp)) {
+                        Text("Tentar Novamente")
+                    }
+                }
+                uiState.weatherData != null -> {
+                    // Exibe os dados do tempo
+                    WeatherDataDisplay(
+                        weatherData = uiState.weatherData,
+                        forecastData = uiState.forecastData
+                    )
+                }
+                else -> {
+                    // Estado inicial ou inesperado, pode mostrar um texto ou carregar
+                    Text("Buscando dados do tempo...")
+                    // Ou chamar viewModel.fetchWeatherData() se o init não for suficiente
+                }
+            }
+        }
     }
 }
 
@@ -271,4 +249,69 @@ fun WeatherAppScreenErrorPreview() {
         )
     }
 }
+
+//@Composable
+//fun WeatherAppScreen(viewModel: WeatherViewModel) {
+//    // Observa o uiState do ViewModel
+//    // Use collectAsStateWithLifecycle para ser mais seguro em relação ao ciclo de vida
+//    // Para isso, adicione implementation "androidx.lifecycle:lifecycle-runtime-compose:2.8.0"
+//    val uiState by viewModel.uiState.collectAsState() // ou collectAsStateWithLifecycle()
+//
+//    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+//        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//            when {
+//                uiState.isLoading -> {
+//                    CircularProgressIndicator()
+//                }
+//                uiState.errorMessage != null -> {
+//                    Text(
+//                        text = "Erro: ${uiState.errorMessage}",
+//                        color = MaterialTheme.colorScheme.error,
+//                        modifier = Modifier.padding(16.dp)
+//                    )
+//                    // Botão para tentar novamente
+//                    Button(onClick = { viewModel.fetchWeather() }, modifier = Modifier.padding(top = 8.dp)) {
+//                        Text("Tentar Novamente")
+//                    }
+//                }
+//                uiState.weatherData != null -> {
+//                    // Exibe os dados do tempo
+//                    WeatherDataDisplay(weatherData = uiState.weatherData!!)
+//                }
+//                else -> {
+//                    // Estado inicial ou inesperado, pode mostrar um texto ou carregar
+//                    Text("Buscando dados do tempo...")
+//                    // Ou chamar viewModel.fetchWeatherData() se o init não for suficiente
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//@Composable
+//fun WeatherDataDisplay(weatherData: WeatherData) {
+//    Column(
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//        verticalArrangement = Arrangement.Center,
+//        modifier = Modifier.padding(16.dp)
+//    ) {
+//        Text(text = "Local: ${weatherData.location.name}, ${weatherData.location.country}", fontSize = 20.sp)
+//        Spacer(modifier = Modifier.height(8.dp))
+//        Text(text = "${weatherData.current.tempCelcius}°C", fontSize = 48.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+//        Spacer(modifier = Modifier.height(8.dp))
+//        Text(text = weatherData.current.condition.text, fontSize = 18.sp)
+//
+//        // Para exibir o ícone (exemplo com Coil, adicione a dependência: implementation "io.coil-kt:coil-compose:2.6.0")
+//        // AsyncImage(
+//        //     model = weatherData.current.condition.iconUrl, // Lembre-se que o mapeamento já adiciona "https:"
+//        //     contentDescription = weatherData.current.condition.text,
+//        //     modifier = Modifier.size(64.dp)
+//        // )
+//
+//        Spacer(modifier = Modifier.height(8.dp))
+//        Text(text = "Sensação: ${weatherData.current.feelslikeCelcius}°C")
+//        Text(text = "Umidade: ${weatherData.current.humidity}%")
+//        Text(text = "Vento: ${weatherData.current.windKph} km/h")
+//    }
+//}
 
