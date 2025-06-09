@@ -41,7 +41,7 @@ class WeatherRepositoryImpl(
             )
 
             if (response.isSuccessful) {
-                val weatherDto = response.body()
+                val weatherDto: WeatherApiResponseDto? = response.body()
                 if (weatherDto != null) {
                     Log.i(TAG, "Current Weather API OK: ${weatherDto.location.name}")
                     return withContext(Dispatchers.Default) { mapDtoToDomain(weatherDto) }
@@ -59,7 +59,7 @@ class WeatherRepositoryImpl(
         }
     }
 
-    /*suspend fun getCurrentWeatherFromApi(apikey: String): *//* Result<WeatherData> *//* WeatherApiResponseDto? { // Mude para seu Result<WeatherData>
+    suspend fun getCurrentWeatherFromApi(apikey: String): WeatherData? { // Mude para seu Result<WeatherData>
         try {
             val location = locationProvider.getCurrentLocation()
             if (location != null) {
@@ -73,11 +73,17 @@ class WeatherRepositoryImpl(
                 )
 
                 if (response.isSuccessful) {
-                    val weatherDataDto = response.body()
+                    val weatherDataDto: WeatherApiResponseDto? = response.body()
                     Log.d("WeatherRepository", "API Response: $weatherDataDto")
                     // Aqui você mapearia weatherDataDto para o seu modelo de domínio WeatherData
                     // return Result.Success(mappedWeatherData)
-                    return weatherDataDto // Retornando DTO diretamente para este exemplo simples
+                    if (weatherDataDto != null) {
+                        return withContext(Dispatchers.Default) { mapDtoToDomain(weatherDataDto) }
+                    } else{
+                        Log.e("WeatherRepository", "API Response body is null")
+                        // return Result.Error("API Response body is null")
+                        return null
+                    }// Retornando DTO diretamente para este exemplo simples
                 } else {
                     Log.e("WeatherRepository", "API Error: ${response.code()} - ${response.message()}")
                     // return Result.Error("API Error: ${response.code()}")
@@ -93,7 +99,7 @@ class WeatherRepositoryImpl(
             // return Result.Error("Network Exception: ${e.message}")
             return null
         }
-    }*/
+    }
 
     override suspend fun getForecastData(apiKey: String, days: Int): ForecastData? {
         try {
