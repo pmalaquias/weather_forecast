@@ -218,6 +218,15 @@ val surfaceContainerDarkHighContrast = Color(0xFF2E3036)
 val surfaceContainerHighDarkHighContrast = Color(0xFF393B41)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF45474C)
 
+
+val daySunnyColor1 = Color(0xFF5698e2)
+val daySunnyColor2 = Color(0xFF5e9cd9)
+val daySunnyColor3 = Color(0xFF79add4)
+
+val nightSunnyColor1 = Color(0xFF1a1a2e)
+val nightSunnyColor2 = Color(0xFF16213e)
+val nightSunnyColor3 = Color(0xFF0f3460)
+
 val UvGradientColors = listOf(
     Color(0xFF289500), // Verde
     Color(0xFFf7e400), // Amarelo
@@ -226,6 +235,21 @@ val UvGradientColors = listOf(
     Color(0xFF6b49c8)  // Roxo/Violeta
 )
 
+val UvGradientColorsDark = listOf(
+    Color(0xFF1F6A00), // Verde escuro
+    Color(0xFFBFA800), // Amarelo escuro
+    Color(0xFFB34D00), // Laranja escuro
+    Color(0xFF9C0012), // Vermelho escuro
+    Color(0xFF4E2A8A)  // Roxo/Violeta escuro
+)
+
+val daySunnyColorBrush = listOf(
+   daySunnyColor1, daySunnyColor2, daySunnyColor3
+)
+
+val nightSunnyColorBrush = listOf(
+    nightSunnyColor1, nightSunnyColor2, nightSunnyColor3
+)
 
 
 
