@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,7 +29,7 @@ import com.pmalaquias.weatherforecast.domain.models.DailyForecast
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.PreviewData
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun CurrentTemperatureDisplay(
     modifier: Modifier = Modifier,
@@ -36,12 +39,12 @@ fun CurrentTemperatureDisplay(
     iconDescription: String = "Weather icon", // Default value for icon description
     fellsLike: Double = 0.0,
     todayForecastData: DailyForecast? = null, // Optional parameter for today's forecast data
-    condition: String = "Unknown Condition" // Default value for condition
+    condition: String = "Unknown Condition", // Default value for condition
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 ) {
 
-
-    val tempWeight= remember(temperature) {
-        when (temperature.roundToInt()){
+    val tempWeight = remember(temperature) {
+        when (temperature.roundToInt()) {
             in Int.MIN_VALUE..0 -> FontWeight.Thin
             in 1..5 -> FontWeight.ExtraLight
             in 6..10 -> FontWeight.Light
@@ -127,6 +130,7 @@ fun CurrentTemperatureDisplay(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "CurrentWeatherDisplay thin Preview")
 @Composable
 fun CurrentWeatherDisplayPreview1() {
@@ -139,6 +143,7 @@ fun CurrentWeatherDisplayPreview1() {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "CurrentWeatherDisplay extra light Preview")
 @Composable
 fun CurrentWeatherDisplayPreview2() {
@@ -150,6 +155,7 @@ fun CurrentWeatherDisplayPreview2() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "CurrentWeatherDisplay light Preview")
 @Composable
 fun CurrentWeatherDisplayPreview3() {
@@ -161,6 +167,7 @@ fun CurrentWeatherDisplayPreview3() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "CurrentWeatherDisplay normal Preview")
 @Composable
 fun CurrentWeatherDisplayPreview4() {
@@ -173,6 +180,7 @@ fun CurrentWeatherDisplayPreview4() {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "CurrentWeatherDisplay medium Preview")
 @Composable
 fun CurrentWeatherDisplayPreview5() {
@@ -184,6 +192,7 @@ fun CurrentWeatherDisplayPreview5() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "CurrentWeatherDisplay semi bold Preview")
 @Composable
 fun CurrentWeatherDisplayPreview6() {
@@ -195,11 +204,12 @@ fun CurrentWeatherDisplayPreview6() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "CurrentWeatherDisplay bold Preview")
 @Composable
 fun CurrentWeatherDisplayPreview7() {
     CurrentTemperatureDisplay(
-        temperature =  30.0,
+        temperature = 30.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
@@ -207,6 +217,7 @@ fun CurrentWeatherDisplayPreview7() {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "CurrentWeatherDisplay extra bold Preview")
 @Composable
 fun CurrentWeatherDisplayPreview8() {
@@ -218,6 +229,7 @@ fun CurrentWeatherDisplayPreview8() {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true, name = "CurrentWeatherDisplay black Preview")
 @Composable
 fun CurrentWeatherDisplayPreview9() {
