@@ -38,6 +38,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components.WeatherDataDisplay
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 import com.pmalaquias.weatherforecast.presentation.viewModel.WeatherViewModel
@@ -184,7 +186,7 @@ fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier)
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             when {
                 uiState.isInitialLoading -> {
-                    CircularProgressIndicator()
+                    LoadingIndicator()
                 }
                 uiState.errorMessage != null -> {
                     Text(
