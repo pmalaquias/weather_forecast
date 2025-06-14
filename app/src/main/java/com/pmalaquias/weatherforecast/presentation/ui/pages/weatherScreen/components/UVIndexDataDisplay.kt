@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -48,20 +49,21 @@ fun UVIndexDataDisplay(
     indicatorColor: Color = Color.White.copy(0.8f),
     indicatorBorderWidth: Dp = 1.dp,
     indicatorBorderColor: Color = Color.Gray,
+    textColor: Color = Color.Black,
 ) {
     val progress = remember(uvIndex, maxUvIndex) {
         (uvIndex / maxUvIndex).toFloat().coerceIn(0f, 1f)
     }
 
-    val shape = remember(uvIndex) { // Depends only on uvIndex
+    val shape1 = remember(uvIndex) { // Depends only on uvIndex
         getUvIndexShape(uvIndex)
     }
 
-    val clip = remember(shape) {
-        RoundedPolygonShape(polygon = shape)
+    val clip1 = remember(shape1) {
+        RoundedPolygonShape(polygon = shape1)
     }
 
-    val fontWeight = remember(uvIndex) {
+    val fontWeight: FontWeight = remember(uvIndex) {
         when (uvIndex.roundToInt()) {
             in 0..2 -> FontWeight.ExtraLight
             in 3..5 -> FontWeight.Light
@@ -79,7 +81,12 @@ fun UVIndexDataDisplay(
         uvIndex.roundToInt()
     }
 
-    Card(modifier = Modifier) {
+    Card(
+        modifier = Modifier,
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White.copy(alpha = 0.4f),
+        )
+    ) {
         Column(
             modifier = Modifier
                 .padding(UVIndexDimens.DefaultPadding)
@@ -94,7 +101,11 @@ fun UVIndexDataDisplay(
             ) {
                 Text("☀️", fontSize = 20.sp)
                 Spacer(Modifier.width(4.dp))
-                Text("Índice UV", style = MaterialTheme.typography.titleSmallEmphasized)
+                Text(
+                    "Índice UV",
+                    style = MaterialTheme.typography.titleSmallEmphasized,
+                    color = textColor
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -104,9 +115,11 @@ fun UVIndexDataDisplay(
             ) {
                 Text(
                     text = uvIndexDescription,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold, // Consider if this should also be dynamic like the indicator text
-                    modifier = Modifier.padding(horizontal = 8.dp)
+                    style = MaterialTheme.typography.bodyLargeEmphasized,
+                    fontWeight = fontWeight,
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    color = textColor,
+                    fontSize = 20.sp
                 )
 
                 Spacer(Modifier.height(8.dp))
@@ -117,7 +130,8 @@ fun UVIndexDataDisplay(
                         .fillMaxWidth()
                 ) {
                     val density = LocalDensity.current
-                    val indicatorDiameterPx = remember(indicatorDiameter) { with(density) { indicatorDiameter.toPx() } }
+                    val indicatorDiameterPx =
+                        remember(indicatorDiameter) { with(density) { indicatorDiameter.toPx() } }
                     val fullBarWidthPx = remember(maxWidth) { with(density) { maxWidth.toPx() } }
 
                     val effectiveBarWidthForIndicatorCenter =
@@ -131,11 +145,11 @@ fun UVIndexDataDisplay(
                     val indicatorCenterXOffsetDp =
                         remember(indicatorCenterXOffsetPx) { with(density) { indicatorCenterXOffsetPx.toDp() } }
 
-
                     Box(
                         modifier = Modifier
                             .height(barHeight)
-                            .fillMaxWidth()
+                            //.fillMaxWidth()
+                            .width(150.dp)
                             .clip(RoundedCornerShape(barHeight / 2))
                             .background(Brush.horizontalGradient(colors = UvGradientColors))
                             .align(Alignment.Center)
@@ -144,9 +158,9 @@ fun UVIndexDataDisplay(
                             modifier = Modifier
                                 .offset(x = indicatorCenterXOffsetDp)
                                 .size(indicatorDiameter)
-                                .clip(clip)
+                                .clip(clip1)
                                 .background(indicatorColor)
-                                .border(indicatorBorderWidth, indicatorBorderColor, clip)
+                                .border(indicatorBorderWidth, indicatorBorderColor, clip1)
                                 .align(Alignment.CenterStart)
                         ) {
                             Text(
@@ -172,7 +186,6 @@ private object UVIndexDimens {
     val LargeSpacer = 16.dp
     val TitleIconSize = 20.sp
 }
-
 
 
 @Preview(name = "Low UV", showBackground = true)
