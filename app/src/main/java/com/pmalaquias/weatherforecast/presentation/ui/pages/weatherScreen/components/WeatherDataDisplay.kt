@@ -20,9 +20,11 @@ import androidx.compose.material3.MediumFlexibleTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +32,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
@@ -40,6 +43,8 @@ import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.Previe
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 import com.pmalaquias.weatherforecast.presentation.ui.theme.daySunnyColorBrush
 import com.pmalaquias.weatherforecast.presentation.ui.theme.nightSunnyColorBrush
+import androidx.compose.ui.unit.lerp
+import androidx.compose.ui.unit.sp
 
 /**
  * Displays weather data in a vertically arranged column.
@@ -61,7 +66,8 @@ import com.pmalaquias.weatherforecast.presentation.ui.theme.nightSunnyColorBrush
 fun WeatherDataDisplay(
     weatherData: WeatherData, forecastData: ForecastData?
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    //val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val todayForecastData: DailyForecast? = forecastData?.dailyForecasts?.firstOrNull()
 
     val TAG_DISPLAY = "WeatherDataDisplayMain"
@@ -92,10 +98,16 @@ fun WeatherDataDisplay(
         )
     }
 
+    val toolbarTitleSize: TextUnit by remember {
+        derivedStateOf {
+            val collapsedFraction = scrollBehavior.state.collapsedFraction
+            lerp( 32.sp,24.sp, collapsedFraction)
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            ///.systemBarsPadding()
             .background(brush = Brush.verticalGradient(colors = backgroundColor)) // Aplica o gradiente ao Box
     ) {
         Scaffold(
@@ -105,15 +117,20 @@ fun WeatherDataDisplay(
                 MediumFlexibleTopAppBar(
                     modifier = Modifier.fillMaxWidth(),//.blur(16.dp, edgeTreatment = BlurredEdgeTreatment.Rectangle), // Blur effect can be adjusted or removed
                     title = {
+
                         Text(
                             text = weatherData.location.name,
-                            style = MaterialTheme.typography.displaySmallEmphasized,
-                            color = textColor
+                            style =
+                                MaterialTheme.typography.displaySmallEmphasized,
+                            color = textColor,
+                            fontSize = toolbarTitleSize
                         )
-                    }, scrollBehavior = scrollBehavior, colors = TopAppBarDefaults.topAppBarColors(
+                    }, scrollBehavior = scrollBehavior,
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent,
                         scrolledContainerColor = Color.Transparent
-                    ), windowInsets = TopAppBarDefaults.windowInsets
+                    ),
+                    windowInsets = TopAppBarDefaults.windowInsets
                 )
             },
             content = { innerPadding ->
@@ -130,79 +147,80 @@ fun WeatherDataDisplay(
                 ) {
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    CurrentTemperatureDisplay(
-                        temperature = weatherData.current.tempCelcius,
+                CurrentTemperatureDisplay(
+                    temperature = weatherData.current.tempCelcius,
+                    textColor = textColor,
+                    icon = weatherData.current.condition.iconUrl,
+                    iconDescription = weatherData.current.condition.text,
+                    fellsLike = weatherData.current.feelslikeCelcius,
+                    todayForecastData = todayForecastData,
+                    condition = weatherData.current.condition.text,
+                    scrollBehavior = scrollBehavior,
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                //Log.d(TAG_DISPLAY, "Calling ForecastDisplayDataComposable with forecastData: $forecastData")
+                Log.d(
+                    TAG_DISPLAY,
+                    "Calling ForecastDisplayDataComposable with forecastData: ${forecastData?.dailyForecasts?.size ?: "null"} items"
+                )
+                ForecastDisplayData(
+                    forecastData = forecastData,
+                    textColor = textColor,
+                )
+                Log.d(TAG_DISPLAY, "Returned from ForecastDisplayDataComposable")
+
+                Spacer(modifier = Modifier.height(24.dp)) // Mais espaço
+
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    HumidityDataDisplay(
+                        humidityData = weatherData.current.humidity,
                         textColor = textColor,
-                        icon = weatherData.current.condition.iconUrl,
-                        iconDescription = weatherData.current.condition.text,
-                        fellsLike = weatherData.current.feelslikeCelcius,
-                        todayForecastData = todayForecastData,
-                        condition = weatherData.current.condition.text,
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    //Log.d(TAG_DISPLAY, "Calling ForecastDisplayDataComposable with forecastData: $forecastData")
-                    Log.d(
-                        TAG_DISPLAY,
-                        "Calling ForecastDisplayDataComposable with forecastData: ${forecastData?.dailyForecasts?.size ?: "null"} items"
+                    PressureDisplay(
+                        pressure = weatherData.current.pressureMb,
+                        textColor = textColor
                     )
-                    ForecastDisplayData(
-                        forecastData = forecastData,
-                        textColor = textColor,
-                    )
-                    Log.d(TAG_DISPLAY, "Returned from ForecastDisplayDataComposable")
-
-                    Spacer(modifier = Modifier.height(24.dp)) // Mais espaço
-
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        HumidityDataDisplay(
-                            humidityData = weatherData.current.humidity,
-                            textColor = textColor,
-                        )
-
-                        PressureDisplay(
-                            pressure = weatherData.current.pressureMb,
-                            textColor = textColor
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        WindDataDisplay(
-                            WindInfo(
-                                speed = weatherData.current.windKph,
-                                direction = weatherData.current.windDir
-                            ),
-                            textColor = textColor
-                        )
-                        RainfallDisplay(
-                            rainfall = weatherData.current.precipitationMm,
-                            textColor = textColor
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-
-                        UVIndexDataDisplay(
-                            uvIndex = weatherData.current.uv,
-                            textColor = textColor
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Log.d(TAG_DISPLAY, "Exiting Scaffold content lambda")
                 }
-            })
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    WindDataDisplay(
+                        WindInfo(
+                            speed = weatherData.current.windKph,
+                            direction = weatherData.current.windDir
+                        ),
+                        textColor = textColor
+                    )
+                    RainfallDisplay(
+                        rainfall = weatherData.current.precipitationMm,
+                        textColor = textColor
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+
+                    UVIndexDataDisplay(
+                        uvIndex = weatherData.current.uv,
+                        textColor = textColor
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+                Log.d(TAG_DISPLAY, "Exiting Scaffold content lambda")
+            }
+        }) // Fim do Scaffold
     }
 }
 
