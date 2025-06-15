@@ -20,11 +20,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.PreviewData
 import kotlin.math.roundToInt
@@ -33,11 +35,12 @@ import kotlin.math.roundToInt
 @Composable
 fun CurrentTemperatureDisplay(
     modifier: Modifier = Modifier,
+    code: Int = 1000, // Default value for code
     temperature: Double,
     textColor: Color = Color.Black,
     icon: String = "https://cdn.weatherapi.com/weather/64x64/day/113.png",
     iconDescription: String = "Weather icon", // Default value for icon description
-    fellsLike: Double = 0.0,
+    feelsLike: Double = 0.0,
     todayForecastData: DailyForecast? = null, // Optional parameter for today's forecast data
     condition: String = "Unknown Condition", // Default value for condition
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -54,7 +57,6 @@ fun CurrentTemperatureDisplay(
             in 26..30 -> FontWeight.Bold
             in 31..35 -> FontWeight.ExtraBold
             else -> FontWeight.Black
-
         }
     }
 
@@ -93,7 +95,7 @@ fun CurrentTemperatureDisplay(
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = "Sensação: $fellsLike °C",
+                text = stringResource(R.string.feels_like_title, feelsLike),
                 style = MaterialTheme.typography.titleMediumEmphasized,
                 color = textColor
             )
@@ -106,13 +108,19 @@ fun CurrentTemperatureDisplay(
                     horizontalArrangement = Arrangement.Start,
                 ) {
                     Text(
-                        text = "Máx.: ${todayForecastData.maxTempCelcius?.roundToInt()}°",
+                        text = stringResource(
+                            R.string.max_today_temp,
+                            todayForecastData.maxTempCelcius?.roundToInt() ?: 0
+                        ),
                         style = MaterialTheme.typography.bodyLargeEmphasized,
                         color = textColor
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Mín.: ${todayForecastData.minTempCelcius?.roundToInt()}°",
+                        text = stringResource(
+                            R.string.min_today_temp,
+                            todayForecastData.minTempCelcius?.roundToInt() ?: 0
+                        ),
                         style = MaterialTheme.typography.bodyLargeEmphasized,
                         color = textColor
                     )
@@ -137,7 +145,7 @@ fun CurrentWeatherDisplayPreview1() {
     CurrentTemperatureDisplay(
         temperature = -1.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
-        fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
+        feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
@@ -150,7 +158,7 @@ fun CurrentWeatherDisplayPreview2() {
     CurrentTemperatureDisplay(
         temperature = 5.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
-        fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
+        feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
@@ -162,7 +170,7 @@ fun CurrentWeatherDisplayPreview3() {
     CurrentTemperatureDisplay(
         temperature = 10.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
-        fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
+        feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
@@ -174,7 +182,7 @@ fun CurrentWeatherDisplayPreview4() {
     CurrentTemperatureDisplay(
         temperature = 15.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
-        fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
+        feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
@@ -187,7 +195,7 @@ fun CurrentWeatherDisplayPreview5() {
     CurrentTemperatureDisplay(
         temperature = 20.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
-        fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
+        feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
@@ -199,7 +207,7 @@ fun CurrentWeatherDisplayPreview6() {
     CurrentTemperatureDisplay(
         temperature = 25.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
-        fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
+        feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
@@ -211,7 +219,7 @@ fun CurrentWeatherDisplayPreview7() {
     CurrentTemperatureDisplay(
         temperature = 30.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
-        fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
+        feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
@@ -224,7 +232,7 @@ fun CurrentWeatherDisplayPreview8() {
     CurrentTemperatureDisplay(
         temperature = 35.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
-        fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
+        feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
@@ -236,7 +244,7 @@ fun CurrentWeatherDisplayPreview9() {
     CurrentTemperatureDisplay(
         temperature = 40.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
-        fellsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
+        feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
         condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
