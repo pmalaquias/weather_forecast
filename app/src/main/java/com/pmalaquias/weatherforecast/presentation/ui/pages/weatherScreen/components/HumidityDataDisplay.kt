@@ -21,10 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.presentation.ui.theme.daySunnyColor1
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -57,7 +59,7 @@ fun HumidityDataDisplay(
                 Text("💧", fontSize = 20.sp)
                 Spacer(Modifier.width(4.dp))
                 Text(
-                    "Umidade",
+                    stringResource(R.string.humidity_title),
                     style = MaterialTheme.typography.titleSmallEmphasized,
                     color = textColor
                 )
