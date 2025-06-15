@@ -70,4 +70,5 @@
     <string name="cw_patchy_light_snow_with_thunder_label">Neve fraca irregular com trovoada</string>
     <string name="cw_moderate_or_heavy_snow_with_thunder_label">Neve moderada ou forte com trovoada</string>
     <string name="cw_unknown_condition">Condição Desconhecida</string>
+    <string name="forecast_unavailable_menssage">Previsão para hoje indisponível</string>
 </resources>
