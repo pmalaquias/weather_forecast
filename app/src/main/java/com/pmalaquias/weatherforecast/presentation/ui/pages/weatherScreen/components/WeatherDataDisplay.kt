@@ -152,7 +152,6 @@ fun WeatherDataDisplay(
                         iconDescription = weatherData.current.condition.text,
                         feelsLike = weatherData.current.feelslikeCelcius,
                         todayForecastData = todayForecastData,
-                        condition = weatherData.current.condition.text,
                         scrollBehavior = scrollBehavior,
                     )
 
