@@ -12,19 +12,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
 import com.pmalaquias.weatherforecast.presentation.ui.utils.DateUtils
-import java.util.Locale
+import com.pmalaquias.weatherforecast.presentation.ui.utils.getLocale
 
 
 @Composable
 fun DailyForecastItem(dailyForecast: DailyForecast, textColor: Color) {
 
 
-    val locale = Locale("pt", "BR")
-    val displayDate = DateUtils.formatDisplayDate(dailyForecast.date, locale)
+    val locale = getLocale()
+    val context = LocalContext.current
+
+    val displayDate = DateUtils.formatDisplayDate(context, dailyForecast.date, locale)
     val dayOfWeekShort = DateUtils.getDayOfWeekAbbreviated(dailyForecast.date, locale)
 
     val maxTempString = "${dailyForecast.maxTempCelcius}°C"
@@ -56,12 +61,12 @@ fun DailyForecastItem(dailyForecast: DailyForecast, textColor: Color) {
                 color = textColor
             )
             Text(
-                text = "Max: $maxTempString",
+                text = stringResource(R.string.max_daily_forecast_item_body, maxTempString),
                 style = MaterialTheme.typography.bodyMedium,
                 color = textColor
             )
             Text(
-                text = "Min: $minTempString",
+                text = stringResource(R.string.min_daily_forecast_item_body, minTempString),
                 style = MaterialTheme.typography.bodyMedium,
                 color = textColor
             )
@@ -72,7 +77,4 @@ fun DailyForecastItem(dailyForecast: DailyForecast, textColor: Color) {
             )
         }
     }
-
-
 }
-
