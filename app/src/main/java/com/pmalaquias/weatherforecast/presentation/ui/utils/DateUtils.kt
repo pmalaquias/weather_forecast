@@ -1,6 +1,8 @@
 package com.pmalaquias.weatherforecast.presentation.ui.utils
 
+import android.content.Context
 import android.util.Log
+import com.pmalaquias.weatherforecast.R
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -10,15 +12,19 @@ object DateUtils {
 
     private val apiDateFormatter = DateTimeFormatter.ISO_LOCAL_DATE
 
-    fun formatDisplayDate(dateString: String, locale: Locale = Locale.getDefault()): String {
+    fun formatDisplayDate(
+        context: Context,
+        dateString: String,
+        locale: Locale = Locale.getDefault()
+    ): String {
         try {
             val forecastDate = LocalDate.parse(dateString, apiDateFormatter)
             val today = LocalDate.now()
             val tomorrow = today.plusDays(1)
 
             return when (forecastDate) {
-                today -> "Hoje"
-                tomorrow -> "Amanhã "
+                today -> context.getString(R.string.today_label)
+                tomorrow -> context.getString(R.string.tomorrow_label)
                 else -> {
                     // Format: "Day of Week, Day of Month" (e.g., "Tue, 3 de June")
                     // Or just "Day of Month" (e.g., "3 de June")
