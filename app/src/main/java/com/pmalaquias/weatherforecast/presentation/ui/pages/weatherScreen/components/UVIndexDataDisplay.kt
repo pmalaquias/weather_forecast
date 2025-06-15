@@ -28,11 +28,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getUvIndexDescription
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getUvIndexShape
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
@@ -55,13 +57,13 @@ fun UVIndexDataDisplay(
         (uvIndex / maxUvIndex).toFloat().coerceIn(0f, 1f)
     }
 
-    val shape1 = remember(uvIndex) { // Depends only on uvIndex
-        getUvIndexShape(uvIndex)
-    }
+    val shape1 = remember(uvIndex) { getUvIndexShape(uvIndex) }// Depends only on uvIndex
 
-    val clip1 = remember(shape1) {
-        RoundedPolygonShape(polygon = shape1)
-    }
+    val clip1 = remember(shape1) { RoundedPolygonShape(polygon = shape1) }
+
+    val uvIndexDescription: Int = remember(uvIndex) { getUvIndexDescription(uvIndex) }
+
+    val uvIndexInt: Int = remember(uvIndex) { uvIndex.roundToInt() }
 
     val fontWeight: FontWeight = remember(uvIndex) {
         when (uvIndex.roundToInt()) {
@@ -71,14 +73,6 @@ fun UVIndexDataDisplay(
             in 8..10 -> FontWeight.Bold
             else -> FontWeight.ExtraBold
         }
-    }
-
-    val uvIndexDescription = remember(uvIndex) {
-        getUvIndexDescription(uvIndex)
-    }
-
-    val uvIndexInt = remember(uvIndex) {
-        uvIndex.roundToInt()
     }
 
     Card(
@@ -102,7 +96,7 @@ fun UVIndexDataDisplay(
                 Text("☀️", fontSize = 20.sp)
                 Spacer(Modifier.width(4.dp))
                 Text(
-                    "Índice UV",
+                    stringResource(R.string.uv_index_title),
                     style = MaterialTheme.typography.titleSmallEmphasized,
                     color = textColor
                 )
@@ -114,7 +108,7 @@ fun UVIndexDataDisplay(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = uvIndexDescription,
+                    text = stringResource(uvIndexDescription),
                     style = MaterialTheme.typography.bodyLargeEmphasized,
                     fontWeight = fontWeight,
                     modifier = Modifier.padding(horizontal = 8.dp),
