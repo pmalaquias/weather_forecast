@@ -34,6 +34,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.lerp
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
 import com.pmalaquias.weatherforecast.domain.models.ForecastData
@@ -43,8 +45,6 @@ import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.Previe
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 import com.pmalaquias.weatherforecast.presentation.ui.theme.daySunnyColorBrush
 import com.pmalaquias.weatherforecast.presentation.ui.theme.nightSunnyColorBrush
-import androidx.compose.ui.unit.lerp
-import androidx.compose.ui.unit.sp
 
 /**
  * Displays weather data in a vertically arranged column.
@@ -67,7 +67,8 @@ fun WeatherDataDisplay(
     weatherData: WeatherData, forecastData: ForecastData?
 ) {
     //val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
-    val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollBehavior: TopAppBarScrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val todayForecastData: DailyForecast? = forecastData?.dailyForecasts?.firstOrNull()
 
     val TAG_DISPLAY = "WeatherDataDisplayMain"
@@ -101,7 +102,7 @@ fun WeatherDataDisplay(
     val toolbarTitleSize: TextUnit by remember {
         derivedStateOf {
             val collapsedFraction = scrollBehavior.state.collapsedFraction
-            lerp( 32.sp,24.sp, collapsedFraction)
+            lerp(32.sp, 24.sp, collapsedFraction)
         }
     }
 
@@ -117,20 +118,16 @@ fun WeatherDataDisplay(
                 MediumFlexibleTopAppBar(
                     modifier = Modifier.fillMaxWidth(),//.blur(16.dp, edgeTreatment = BlurredEdgeTreatment.Rectangle), // Blur effect can be adjusted or removed
                     title = {
-
                         Text(
                             text = weatherData.location.name,
-                            style =
-                                MaterialTheme.typography.displaySmallEmphasized,
+                            style = MaterialTheme.typography.displaySmallEmphasized,
                             color = textColor,
                             fontSize = toolbarTitleSize
                         )
-                    }, scrollBehavior = scrollBehavior,
-                    colors = TopAppBarDefaults.topAppBarColors(
+                    }, scrollBehavior = scrollBehavior, colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent,
                         scrolledContainerColor = Color.Transparent
-                    ),
-                    windowInsets = TopAppBarDefaults.windowInsets
+                    ), windowInsets = TopAppBarDefaults.windowInsets
                 )
             },
             content = { innerPadding ->
@@ -147,80 +144,77 @@ fun WeatherDataDisplay(
                 ) {
                     Spacer(modifier = Modifier.height(16.dp))
 
-                CurrentTemperatureDisplay(
-                    temperature = weatherData.current.tempCelcius,
-                    textColor = textColor,
-                    icon = weatherData.current.condition.iconUrl,
-                    iconDescription = weatherData.current.condition.text,
-                    fellsLike = weatherData.current.feelslikeCelcius,
-                    todayForecastData = todayForecastData,
-                    condition = weatherData.current.condition.text,
-                    scrollBehavior = scrollBehavior,
-                )
+                    CurrentTemperatureDisplay(
+                        temperature = weatherData.current.tempCelcius,
+                        code = weatherData.current.condition.code,
+                        textColor = textColor,
+                        icon = weatherData.current.condition.iconUrl,
+                        iconDescription = weatherData.current.condition.text,
+                        feelsLike = weatherData.current.feelslikeCelcius,
+                        todayForecastData = todayForecastData,
+                        condition = weatherData.current.condition.text,
+                        scrollBehavior = scrollBehavior,
+                    )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                //Log.d(TAG_DISPLAY, "Calling ForecastDisplayDataComposable with forecastData: $forecastData")
-                Log.d(
-                    TAG_DISPLAY,
-                    "Calling ForecastDisplayDataComposable with forecastData: ${forecastData?.dailyForecasts?.size ?: "null"} items"
-                )
-                ForecastDisplayData(
-                    forecastData = forecastData,
-                    textColor = textColor,
-                )
-                Log.d(TAG_DISPLAY, "Returned from ForecastDisplayDataComposable")
-
-                Spacer(modifier = Modifier.height(24.dp)) // Mais espaço
-
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    HumidityDataDisplay(
-                        humidityData = weatherData.current.humidity,
+                    //Log.d(TAG_DISPLAY, "Calling ForecastDisplayDataComposable with forecastData: $forecastData")
+                    Log.d(
+                        TAG_DISPLAY,
+                        "Calling ForecastDisplayDataComposable with forecastData: ${forecastData?.dailyForecasts?.size ?: "null"} items"
+                    )
+                    ForecastDisplayData(
+                        forecastData = forecastData,
                         textColor = textColor,
                     )
+                    Log.d(TAG_DISPLAY, "Returned from ForecastDisplayDataComposable")
 
-                    PressureDisplay(
-                        pressure = weatherData.current.pressureMb,
-                        textColor = textColor
-                    )
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    WindDataDisplay(
-                        WindInfo(
-                            speed = weatherData.current.windKph,
-                            direction = weatherData.current.windDir
-                        ),
-                        textColor = textColor
-                    )
-                    RainfallDisplay(
-                        rainfall = weatherData.current.precipitationMm,
-                        textColor = textColor
-                    )
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
+                    Spacer(modifier = Modifier.height(24.dp)) // Mais espaço
 
-                    UVIndexDataDisplay(
-                        uvIndex = weatherData.current.uv,
-                        textColor = textColor
-                    )
-                }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        HumidityDataDisplay(
+                            humidityData = weatherData.current.humidity,
+                            textColor = textColor,
+                        )
 
-                Spacer(modifier = Modifier.height(16.dp))
-                Log.d(TAG_DISPLAY, "Exiting Scaffold content lambda")
+                        PressureCard(
+                            pressure = weatherData.current.pressureMb, textColor = textColor
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        WindDataCard(
+                            WindInfo(
+                                speed = weatherData.current.windKph,
+                                direction = weatherData.current.windDir
+                            ), textColor = textColor
+                        )
+                        PrecipitationCard(
+                            rainfall = weatherData.current.precipitationMm, textColor = textColor
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+
+                        UVIndexDataDisplay(
+                            uvIndex = weatherData.current.uv, textColor = textColor
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Log.d(TAG_DISPLAY, "Exiting Scaffold content lambda")
+                }
             }
-        }) // Fim do Scaffold
+        ) // Fim do Scaffold
     }
 }
 
@@ -228,11 +222,9 @@ fun WeatherDataDisplay(
 @Composable
 fun WeatherDataDisplayPreview() {
     AppTheme {
-
         WeatherDataDisplay(
             weatherData = PreviewData.sampleWeatherData,
             forecastData = PreviewData.sampleForecastData
         )
-
     }
 }
