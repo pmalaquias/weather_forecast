@@ -27,6 +27,7 @@ class WeatherRepositoryImpl(
     override suspend fun getCurrentWeatherData(apiKey: String): WeatherData? {
         try {
             val deviceLocation = locationProvider.getCurrentLocation()
+
             if (deviceLocation == null) {
                 Log.e(TAG, "Device location not available for current weather.")
                 return null
@@ -37,7 +38,7 @@ class WeatherRepositoryImpl(
             val response = weatherApiService.getCurrentWeather(
                 apiKey = apiKey,
                 locationQuery = latLonQuery,
-                lang = "pt"
+                lang = "en" // Use your locale language here, e.g., "pt" for Portuguese
             )
 
             if (response.isSuccessful) {
@@ -69,7 +70,7 @@ class WeatherRepositoryImpl(
                 val response = weatherApiService.getCurrentWeather(
                     apiKey = apikey, // Do seu BuildConfig
                     locationQuery = latLonQuery,
-                    lang = "pt"
+                    lang = "en" // Use your locale language here, e.g., "pt" for Portuguese
                 )
 
                 if (response.isSuccessful) {
@@ -116,7 +117,7 @@ class WeatherRepositoryImpl(
                 apiKey = apiKey,
                 locationQuery = latLonQuery,
                 days = days,
-                lang = "pt"
+                lang = "en"
             )
 
             if (response.isSuccessful) {
