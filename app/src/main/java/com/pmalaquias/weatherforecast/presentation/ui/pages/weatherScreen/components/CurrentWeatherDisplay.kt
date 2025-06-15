@@ -29,6 +29,7 @@ import coil.compose.AsyncImage
 import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.PreviewData
+import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getConditionLabel
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
@@ -42,9 +43,10 @@ fun CurrentTemperatureDisplay(
     iconDescription: String = "Weather icon", // Default value for icon description
     feelsLike: Double = 0.0,
     todayForecastData: DailyForecast? = null, // Optional parameter for today's forecast data
-    condition: String = "Unknown Condition", // Default value for condition
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 ) {
+    
+    val condition: Int = getConditionLabel(code)
 
     val tempWeight = remember(temperature) {
         when (temperature.roundToInt()) {
@@ -68,7 +70,7 @@ fun CurrentTemperatureDisplay(
         verticalArrangement = Arrangement.Center
     ){
         Text(
-            text = condition,
+            text = stringResource(condition),
             style = MaterialTheme.typography.headlineSmallEmphasized, // Estilo maior
             modifier = Modifier.padding(bottom = 8.dp),
             color = textColor
@@ -127,7 +129,7 @@ fun CurrentTemperatureDisplay(
                 }
             } else {
                 Text(
-                    "Previsão para hoje indisponível",
+                    stringResource(R.string.forecast_unavailable_menssage),
                     modifier = Modifier.padding(vertical = 8.dp),
                     style = MaterialTheme.typography.bodyMediumEmphasized,
                     color = textColor
@@ -146,7 +148,6 @@ fun CurrentWeatherDisplayPreview1() {
         temperature = -1.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
-        condition = PreviewData.sampleWeatherData.current.condition.text,
     )
 }
 
@@ -159,7 +160,7 @@ fun CurrentWeatherDisplayPreview2() {
         temperature = 5.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
-        condition = PreviewData.sampleWeatherData.current.condition.text,
+        
     )
 }
 
@@ -171,7 +172,7 @@ fun CurrentWeatherDisplayPreview3() {
         temperature = 10.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
-        condition = PreviewData.sampleWeatherData.current.condition.text,
+        
     )
 }
 
@@ -183,7 +184,7 @@ fun CurrentWeatherDisplayPreview4() {
         temperature = 15.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
-        condition = PreviewData.sampleWeatherData.current.condition.text,
+        
     )
 }
 
@@ -196,7 +197,7 @@ fun CurrentWeatherDisplayPreview5() {
         temperature = 20.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
-        condition = PreviewData.sampleWeatherData.current.condition.text,
+        
     )
 }
 
@@ -208,7 +209,7 @@ fun CurrentWeatherDisplayPreview6() {
         temperature = 25.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
-        condition = PreviewData.sampleWeatherData.current.condition.text,
+        
     )
 }
 
@@ -220,7 +221,7 @@ fun CurrentWeatherDisplayPreview7() {
         temperature = 30.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
-        condition = PreviewData.sampleWeatherData.current.condition.text,
+        
     )
 }
 
@@ -233,7 +234,7 @@ fun CurrentWeatherDisplayPreview8() {
         temperature = 35.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
-        condition = PreviewData.sampleWeatherData.current.condition.text,
+        
     )
 }
 
@@ -245,6 +246,6 @@ fun CurrentWeatherDisplayPreview9() {
         temperature = 40.0,
         icon = PreviewData.sampleWeatherData.current.condition.iconUrl,
         feelsLike = PreviewData.sampleWeatherData.current.feelslikeCelcius,
-        condition = PreviewData.sampleWeatherData.current.condition.text,
+        
     )
 }
