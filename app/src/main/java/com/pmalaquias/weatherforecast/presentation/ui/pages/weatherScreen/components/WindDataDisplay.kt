@@ -19,15 +19,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.WindInfo
 
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun WindDataDisplay(
+fun WindDataCard(
     windInfo: WindInfo, textColor: Color = Color.Black
 ) {
     Card(
@@ -52,7 +54,7 @@ fun WindDataDisplay(
                 Text("🍃", fontSize = 20.sp)
                 Spacer(Modifier.width(4.dp))
                 Text(
-                    "Vento",
+                    stringResource(R.string.wind_title),
                     style = MaterialTheme.typography.titleSmallEmphasized,
                     color = textColor
                 )
@@ -96,7 +98,7 @@ fun WindDataDisplay(
 @Composable
 fun WindDataDisplayPreview() {
     // Example preview data
-    WindDataDisplay(
+    WindDataCard(
         windInfo = WindInfo(speed = 15.0, direction = "E")
     )
 }
