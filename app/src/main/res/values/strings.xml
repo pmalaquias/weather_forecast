@@ -68,5 +68,6 @@
     <string name="cw_moderate_or_heavy_rain_with_thunder_label">Moderate or heavy rain with thunder</string>
     <string name="cw_patchy_light_snow_with_thunder_label">Patchy light snow with thunder</string>
     <string name="cw_moderate_or_heavy_snow_with_thunder_label">Moderate or heavy snow with thunder</string>
+    <string name="cw_unknown_condition">Unknown Condition</string>
 
 </resources>
