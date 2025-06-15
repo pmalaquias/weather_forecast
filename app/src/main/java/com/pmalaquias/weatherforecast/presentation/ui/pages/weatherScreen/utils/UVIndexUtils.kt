@@ -3,6 +3,7 @@ package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialShapes
 import androidx.graphics.shapes.RoundedPolygon
+import com.pmalaquias.weatherforecast.R
 import kotlin.math.roundToInt
 
 /**
@@ -45,12 +46,12 @@ fun getUvIndexShape(uvIndex: Double): RoundedPolygon {
  * @param uvIndex The UV index value as a [Double].
  * @return A [String] describing the UV index level.
  */
-fun getUvIndexDescription(uvIndex: Double): String {
+fun getUvIndexDescription(uvIndex: Double): Int {
     return when (uvIndex.roundToInt()) {
-        in 0..2 -> "Baixo"
-        in 3..5 -> "Moderado"
-        in 6..7 -> "Alto"
-        in 8..10 -> "Muito Alto"
-        else -> "Extremo"
+        in 0..2 -> R.string.uv_low_index_body
+        in 3..5 -> R.string.uv_moderate_index_body
+        in 6..7 -> R.string.uv_high_index_body
+        in 8..10 -> R.string.uv_very_high_index_body
+        else -> R.string.uv_extreme_index_body
     }
 }
