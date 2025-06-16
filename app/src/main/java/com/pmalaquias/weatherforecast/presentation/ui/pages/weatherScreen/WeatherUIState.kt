@@ -19,7 +19,7 @@ data class WeatherUIState(
     val isRefreshing: Boolean = false,
     val weatherData: WeatherData? = null,
     val forecastData: ForecastData? = null,
-    val errorMessage: String? = null,
+    val errorMessage: Int? = null,
     val isForecastLoading: Boolean = false,
     val forecastErrorMessage: String? = null
 )
