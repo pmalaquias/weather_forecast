@@ -1,8 +1,10 @@
 package com.pmalaquias.weatherforecast.presentation.viewModel
 
+import androidx.core.content.ContextCompat.getString
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pmalaquias.weatherforecast.BuildConfig
+import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.data.local.LocationProvider
 import com.pmalaquias.weatherforecast.data.repositories.WeatherRepositoryImpl
 import com.pmalaquias.weatherforecast.domain.models.ForecastData
@@ -70,7 +72,7 @@ class WeatherViewModel(
                         isInitialLoading = false,
                         isRefreshing = false,
                         weatherData = null,
-                        errorMessage = "Falha ao buscar dados do tempo. Verifique sua conexão ou tente novamente"
+                        errorMessage = R.string.error_message_without_conection
                     )
                 }
             }
@@ -101,7 +103,7 @@ class WeatherViewModel(
                         isInitialLoading = false,
                         isRefreshing = false,
                         forecastData = null,
-                        errorMessage = "Falha ao buscar dados da previsão do tempo. Verifique sua conexão ou tente novamente"
+                        errorMessage = R.string.error_message_without_conection
                     )
                 }
             }
