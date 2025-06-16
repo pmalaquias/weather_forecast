@@ -1,5 +1,6 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen
 
+import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.CurrentWeather
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
 import com.pmalaquias.weatherforecast.domain.models.ForecastData
@@ -96,7 +97,7 @@ object PreviewData {
 
     val loadingState = WeatherUIState(isInitialLoading = true, errorMessage = null)
 
-    val errorState = WeatherUIState(errorMessage = "Falha ao carregar dados (Preview)")
+    val errorState = WeatherUIState(errorMessage = R.string.error_message_without_conection)
 
     val successState = WeatherUIState(
         isInitialLoading = false,
