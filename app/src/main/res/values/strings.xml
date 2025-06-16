@@ -69,6 +69,31 @@
     <string name="cw_patchy_light_snow_with_thunder_label">Patchy light snow with thunder</string>
     <string name="cw_moderate_or_heavy_snow_with_thunder_label">Moderate or heavy snow with thunder</string>
     <string name="cw_unknown_condition">Unknown Condition</string>
-    <string name="forecast_unavailable_menssage">Forecast for today unavailable</string>
+    <!--    -->
+    <string name="forecast_unavailable_message">Forecast for today unavailable</string>
+
+    <!-- Point of Compass    -->
+    <string name="compass_north">North</string> <!--N-->
+    <string name="compass_east">East</string> <!--E-->
+    <string name="compass_south">South</string> <!--S-->
+    <string name="compass_west">West</string> <!--W-->
+    <string name="compass_northeast">Northeast</string> <!--NE-->
+    <string name="compass_northwest">Northwest</string> <!--NW-->
+    <string name="compass_southeast">Southeast</string> <!--SE-->
+    <string name="compass_southwest">Southwest</string> <!--SW-->
+    <string name="compass_north_northeast">North-Northeast</string> <!--NNE-->
+    <string name="compass_north_northwest">North-Northwest</string> <!--NNW-->
+    <string name="compass_east_northeast">East-Northeast</string> <!--ENE-->
+    <string name="compass_east_southeast">East-Southeast</string> <!--ESE-->
+    <string name="compass_south_southeast">South-Southeast</string> <!--SSE-->
+    <string name="compass_south_southwest">South-Southwest</string> <!--SSW-->
+    <string name="compass_west_northwest">West-Northwest</string> <!--WNW-->
+    <string name="compass_west_southwest">West-Southwest</string>
+    <string name="compass_unknown">Unknown Direction</string>
+    <!-- end Point of compass    -->
+
+    <string name="try_again_button">Try Again</string>
+    <string name="error_message_without_conection">Failed to fetch weather data. Check your connection or try again.</string>
+    <string name="standard_error_message">Error: %1$s</string> <!--WSW-->
 
 </resources>

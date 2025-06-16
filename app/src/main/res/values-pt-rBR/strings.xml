@@ -70,5 +70,25 @@
     <string name="cw_patchy_light_snow_with_thunder_label">Neve fraca irregular com trovoada</string>
     <string name="cw_moderate_or_heavy_snow_with_thunder_label">Neve moderada ou forte com trovoada</string>
     <string name="cw_unknown_condition">Condição Desconhecida</string>
-    <string name="forecast_unavailable_menssage">Previsão para hoje indisponível</string>
+    <string name="forecast_unavailable_message">Previsão para hoje indisponível</string>
+    <string name="compass_north">Norte</string>
+    <string name="compass_east">Leste</string>
+    <string name="compass_south">Sul</string>
+    <string name="compass_west">Oeste</string>
+    <string name="compass_northeast">Nordeste</string>
+    <string name="compass_northwest">Noroeste</string>
+    <string name="compass_southeast">Sudeste</string>
+    <string name="compass_southwest">Sudoeste</string>
+    <string name="compass_north_northeast">Nor-Nordeste</string>
+    <string name="compass_north_northwest">Nor-Noroeste</string>
+    <string name="compass_east_northeast">És-nordeste</string>
+    <string name="compass_east_southeast">És-sudeste</string>
+    <string name="compass_south_southeast">Su-sudeste</string>
+    <string name="compass_south_southwest">Su-sudoeste</string>
+    <string name="compass_west_northwest">Oés-noroeste</string>
+    <string name="compass_west_southwest">Oés-sudoeste</string>
+    <string name="compass_unknown">Direção Desconhecida</string>
+    <string name="try_again_button">Tentar Novamente</string>
+    <string name="error_message_without_conection">Falha ao buscar dados do tempo. Verifique sua conexão ou tente novamente</string>
+    <string name="standard_error_message">Erro: %1$s</string>
 </resources>
