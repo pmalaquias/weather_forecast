@@ -129,7 +129,7 @@ fun CurrentTemperatureDisplay(
                 }
             } else {
                 Text(
-                    stringResource(R.string.forecast_unavailable_menssage),
+                    stringResource(R.string.forecast_unavailable_message),
                     modifier = Modifier.padding(vertical = 8.dp),
                     style = MaterialTheme.typography.bodyMediumEmphasized,
                     color = textColor
