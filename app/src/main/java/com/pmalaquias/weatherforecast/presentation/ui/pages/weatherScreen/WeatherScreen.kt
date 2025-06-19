@@ -15,7 +15,6 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -38,8 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components.WeatherDataDisplay
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 import com.pmalaquias.weatherforecast.presentation.viewModel.WeatherViewModel
@@ -74,9 +71,7 @@ fun WeatherAppScreen(
     onRetry: () -> Unit,
 ) {
     val pullRefreshState = rememberPullRefreshState(
-        refreshing = uiState.isRefreshing,
-        onRefresh = { onRetry }
-    )
+        refreshing = uiState.isRefreshing, onRefresh = { onRetry })
 
     var expanded by rememberSaveable { mutableStateOf(false) }
     var searchResults: List<String> by rememberSaveable { mutableStateOf(emptyList()) }
@@ -85,28 +80,26 @@ fun WeatherAppScreen(
     val textFieldState = rememberTextFieldState()
     val scope = rememberCoroutineScope()
 
-    val inputField =
-        @Composable {
-            SearchBarDefaults.InputField(
-                modifier = Modifier,
-                searchBarState = searchBarState,
-                textFieldState = textFieldState,
-                onSearch = { scope.launch { searchBarState.animateToCollapsed() } },
-                placeholder = { Text("Search...") },
-                leadingIcon = {
-                    if (searchBarState.currentValue == SearchBarValue.Expanded) {
-                        IconButton(
-                            onClick = { scope.launch { searchBarState.animateToCollapsed() } }
-                        ) {
-                            Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
-                        }
-                    } else {
-                        Icon(Icons.Default.Search, contentDescription = null)
+    val inputField = @Composable {
+        SearchBarDefaults.InputField(
+            modifier = Modifier,
+            searchBarState = searchBarState,
+            textFieldState = textFieldState,
+            onSearch = { scope.launch { searchBarState.animateToCollapsed() } },
+            placeholder = { Text("Search...") },
+            leadingIcon = {
+                if (searchBarState.currentValue == SearchBarValue.Expanded) {
+                    IconButton(
+                        onClick = { scope.launch { searchBarState.animateToCollapsed() } }) {
+                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
                     }
-                },
-                trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
-            )
-        }
+                } else {
+                    Icon(Icons.Default.Search, contentDescription = null)
+                }
+            },
+            trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
+        )
+    }
 
     Box(modifier = Modifier, contentAlignment = Alignment.Center) {
         Column(
@@ -118,48 +111,48 @@ fun WeatherAppScreen(
             verticalArrangement = Arrangement.Top
         ) {
 
-                when {
-                    // Do not show the central CircularProgressIndicator if pull-to-refresh is already active
-                    // The pullRefreshState.refreshing (uiState.isLoading) already controls the indicator at the top.
-                    // Unless it is the initial loading and not a refresh.
-                    // You can refine this logic, for example, by having an `isInitialLoading`.
+            when {
+                // Do not show the central CircularProgressIndicator if pull-to-refresh is already active
+                // The pullRefreshState.refreshing (uiState.isLoading) already controls the indicator at the top.
+                // Unless it is the initial loading and not a refresh.
+                // You can refine this logic, for example, by having an `isInitialLoading`.
 
-                    uiState.isInitialLoading -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            LoadingIndicator()
-                        }
-                    }
-                    uiState.errorMessage != null -> {
-                        Text(
-                            text = "Erro: ${uiState.errorMessage}",
-                            color = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.padding(16.dp)
-                        )
-                        // Botão para tentar novamente
-                        Button(onClick = { onRetry }, modifier = Modifier.padding(top = 8.dp)) {
-                            Text("Tentar Novamente")
-                        }
-                    }
-                    uiState.weatherData != null -> {
-                        // Exibe os dados do tempo
-                        WeatherDataDisplay(
-                            weatherData = uiState.weatherData,
-                            forecastData = uiState.forecastData
-                            )
-                    }
-                    else -> {
-                        // Exibe uma mensagem de carregamento ou vazio
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("Puxe para baixo para atualizar.")
-                        }
+                uiState.isInitialLoading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                    ) {
+                        LoadingIndicator()
                     }
                 }
+
+                uiState.errorMessage != null -> {
+                    Text(
+                        text = "Erro: ${uiState.errorMessage}",
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    // Botão para tentar novamente
+                    Button(onClick = { onRetry }, modifier = Modifier.padding(top = 8.dp)) {
+                        Text("Tentar Novamente")
+                    }
+                }
+
+                uiState.weatherData != null -> {
+                    // Exibe os dados do tempo
+                    WeatherDataDisplay(
+                        weatherData = uiState.weatherData, forecastData = uiState.forecastData
+                    )
+                }
+
+                else -> {
+                    // Exibe uma mensagem de carregamento ou vazio
+                    Box(
+                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                    ) {
+                        Text("Puxe para baixo para atualizar.")
+                    }
+                }
+            }
 
         }
 
@@ -179,8 +172,7 @@ fun WeatherAppScreen(
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier) {
-    val uiState =
-        viewModel.uiState.collectAsStateWithLifecycle().value
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -188,17 +180,14 @@ fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier)
                 uiState.isInitialLoading -> {
                     LoadingIndicator()
                 }
+
                 uiState.errorMessage != null -> {
-                    Text(
-                        text = "Erro: ${uiState.errorMessage}",
-                        color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.padding(16.dp)
+                    ErrorScreen(
+                        errorMessage = uiState.errorMessage,
+                        onRetry = { viewModel.fetchWeather() }
                     )
-                    // Botão para tentar novamente
-                    Button(onClick = { viewModel.fetchWeather() }, modifier = Modifier.padding(top = 8.dp)) {
-                        Text("Tentar Novamente")
-                    }
                 }
+
                 uiState.weatherData != null -> {
                     // Exibe os dados do tempo
                     WeatherDataDisplay(
@@ -206,6 +195,7 @@ fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier)
                         forecastData = uiState.forecastData
                     )
                 }
+
                 else -> {
                     // Estado inicial ou inesperado, pode mostrar um texto ou carregar
                     Text("Buscando dados do tempo...")
@@ -222,9 +212,7 @@ fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier)
 fun WeatherAppScreenLoadingPreview() {
     AppTheme {
         WeatherAppScreen(
-            uiState = PreviewData.loadingState,
-            onRetry = {}
-        )
+            uiState = PreviewData.loadingState, onRetry = {})
     }
 }
 
@@ -234,9 +222,7 @@ fun WeatherAppScreenLoadingPreview() {
 fun WeatherAppScreenSuccessPreview() {
     AppTheme {
         WeatherAppScreen(
-            uiState = PreviewData.successState,
-            onRetry = {}
-        )
+            uiState = PreviewData.successState, onRetry = {})
     }
 }
 
@@ -246,9 +232,7 @@ fun WeatherAppScreenSuccessPreview() {
 fun WeatherAppScreenErrorPreview() {
     AppTheme {
         WeatherAppScreen(
-            uiState = PreviewData.errorState,
-            onRetry = {}
-        )
+            uiState = PreviewData.errorState, onRetry = {})
     }
 }
 
