@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
+import com.pmalaquias.weatherforecast.presentation.ui.pages.extensions.toBoolean
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.PreviewData
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getConditionLabel
 import kotlin.math.roundToInt
@@ -43,10 +44,11 @@ fun CurrentTemperatureDisplay(
     iconDescription: String = "Weather icon", // Default value for icon description
     feelsLike: Double = 0.0,
     todayForecastData: DailyForecast? = null, // Optional parameter for today's forecast data
-    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
+    isDay: Int = 1 // Default value for isday
 ) {
     
-    val condition: Int = getConditionLabel(code)
+    val condition: Int = getConditionLabel(code, isDay.toBoolean())
 
     val tempWeight = remember(temperature) {
         when (temperature.roundToInt()) {
