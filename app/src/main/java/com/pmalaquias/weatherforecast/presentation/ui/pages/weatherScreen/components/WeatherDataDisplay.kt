@@ -13,8 +13,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumFlexibleTopAppBar
 import androidx.compose.material3.Scaffold
@@ -64,7 +69,10 @@ import com.pmalaquias.weatherforecast.presentation.ui.theme.nightSunnyColorBrush
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WeatherDataDisplay(
-    weatherData: WeatherData, forecastData: ForecastData?
+    weatherData: WeatherData,
+    forecastData: ForecastData?,
+    isDay: Boolean = true,
+    onBackClick: () -> Unit = {}
 ) {
     //val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val scrollBehavior: TopAppBarScrollBehavior =
@@ -83,7 +91,7 @@ fun WeatherDataDisplay(
     }
     Log.d(TAG_DISPLAY, "TodayForecastData is null: ${todayForecastData == null}")
 
-    val isDay = weatherData.current.isDay == 1
+    //val isDay = weatherData.current.isDay == 1
 
     val backgroundColor =
         remember(isDay) { if (isDay) daySunnyColorBrush else nightSunnyColorBrush }
@@ -117,6 +125,15 @@ fun WeatherDataDisplay(
             topBar = {
                 MediumFlexibleTopAppBar(
                     modifier = Modifier.fillMaxWidth(),//.blur(16.dp, edgeTreatment = BlurredEdgeTreatment.Rectangle), // Blur effect can be adjusted or removed
+                    navigationIcon = {
+                        IconButton(onClick = onBackClick) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back",
+                                tint = textColor // Use the same text color for the icon
+                            )
+                        }
+                    },
                     title = {
                         Text(
                             text = weatherData.location.name,
@@ -124,10 +141,14 @@ fun WeatherDataDisplay(
                             color = textColor,
                             fontSize = toolbarTitleSize
                         )
-                    }, scrollBehavior = scrollBehavior, colors = TopAppBarDefaults.topAppBarColors(
+                    },
+                    scrollBehavior = scrollBehavior,
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent,
                         scrolledContainerColor = Color.Transparent
-                    ), windowInsets = TopAppBarDefaults.windowInsets
+                    ),
+                    windowInsets = TopAppBarDefaults.windowInsets,
+
                 )
             },
             content = { innerPadding ->
@@ -153,6 +174,7 @@ fun WeatherDataDisplay(
                         feelsLike = weatherData.current.feelslikeCelcius,
                         todayForecastData = todayForecastData,
                         scrollBehavior = scrollBehavior,
+                        isDay = weatherData.current.isDay
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -223,7 +245,7 @@ fun WeatherDataDisplayPreview() {
     AppTheme {
         WeatherDataDisplay(
             weatherData = PreviewData.sampleWeatherData,
-            forecastData = PreviewData.sampleForecastData
+            forecastData = PreviewData.sampleForecastData,
         )
     }
 }
