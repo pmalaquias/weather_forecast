@@ -25,13 +25,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.WindInfo
+import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getCompassLabel
 
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WindDataCard(
-    windInfo: WindInfo, textColor: Color = Color.Black
+    windInfo: WindInfo,
+    textColor: Color = Color.Black
 ) {
+    val windDirection: Int = getCompassLabel(windInfo.direction)
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White.copy(alpha = 0.4f),
@@ -83,7 +87,7 @@ fun WindDataCard(
                         color = textColor
                     )
                     Text(
-                        text = windInfo.direction,
+                        text = stringResource(windDirection),
                         style = MaterialTheme.typography.bodySmallEmphasized,
                         color = textColor
                     )
