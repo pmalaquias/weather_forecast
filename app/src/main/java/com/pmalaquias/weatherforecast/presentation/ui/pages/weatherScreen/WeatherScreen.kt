@@ -140,7 +140,9 @@ fun WeatherAppScreen(
                 uiState.weatherData != null -> {
                     // Exibe os dados do tempo
                     WeatherDataDisplay(
-                        weatherData = uiState.weatherData, forecastData = uiState.forecastData
+                        weatherData = uiState.weatherData,
+                        forecastData = uiState.forecastData,
+                        //onBackClick = onBackClick
                     )
                 }
 
@@ -171,8 +173,15 @@ fun WeatherAppScreen(
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier) {
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+fun WeatherAppScreen(
+    viewModel: WeatherViewModel,
+    uiState: WeatherUIState,
+    onBackClick: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    //val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+
+    val isDay: Boolean = uiState.weatherData?.current?.isDay == 1
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -188,11 +197,13 @@ fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier)
                     )
                 }
 
-                uiState.weatherData != null -> {
+                uiState.weatherData != null && uiState.forecastData != null -> {
                     // Exibe os dados do tempo
                     WeatherDataDisplay(
                         weatherData = uiState.weatherData,
-                        forecastData = uiState.forecastData
+                        forecastData = uiState.forecastData,
+                        onBackClick = onBackClick,
+                        isDay = isDay,
                     )
                 }
 
@@ -202,6 +213,7 @@ fun WeatherAppScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier)
                     // Ou chamar viewModel.fetchWeatherData() se o init não for suficiente
                 }
             }
+
         }
     }
 }
