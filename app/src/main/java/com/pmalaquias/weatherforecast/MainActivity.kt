@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.pmalaquias.weatherforecast.data.local.LocationProvider
 import com.pmalaquias.weatherforecast.data.repositories.WeatherRepositoryImpl
+import com.pmalaquias.weatherforecast.presentation.ui.pages.MainScreen
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.WeatherAppScreen
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.WeatherViewModelFactory
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
@@ -60,10 +61,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    WeatherAppScreen(
+                    MainScreen(
                         viewModel = weatherViewModel,
                         modifier = Modifier.padding(innerPadding)
                     )
+                   /* WeatherAppScreen(
+                        viewModel = weatherViewModel,
+                        modifier = Modifier.padding(innerPadding)
+                    )*/
                 }
             }
         }
