@@ -19,15 +19,15 @@ coilCompose = "2.7.0"
 material = "1.8.3"
 materialIconsExtendedAndroid = "1.7.8"
 graphicsShapes = "1.1.0-alpha01"
-mockk = "1.14.2"
+mockk = "1.14.4"
 kotlinxCoroutinesTest = "1.10.2"
-uiTextGoogleFonts = "1.9.0-beta01"
+uiTextGoogleFonts = "1.9.0-beta02"
 accompanistSystemuicontroller = "0.36.0"
 navigationComposeJvmstubs = "2.9.0"
-material3WindowSizeClass = "1.4.0-alpha16"
-material3AdaptiveNavigationSuite = "1.4.0-alpha16"
+material3WindowSizeClass = "1.4.0-alpha17"
+material3AdaptiveNavigationSuite = "1.4.0-alpha17"
 playServicesAppsearch = "16.0.1"
-navigationCompose = "2.9.0"
+navigationCompose = "2.9.1"
 uiDesktop = "1.7.0"
 
 [libraries]
@@ -44,7 +44,7 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.4.0-alpha16" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.4.0-alpha17" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 kotlinx-coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -58,7 +58,7 @@ androidx-material-icons-extended-android = { group = "androidx.compose.material"
 androidx-graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphicsShapes" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
-androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version = "1.9.0-beta01" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-navigation-compose-jvmstubs = { group = "androidx.navigation", name = "navigation-compose-jvmstubs", version.ref = "navigationComposeJvmstubs" }
 androidx-material3-window-size-class1 = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3WindowSizeClass" }
