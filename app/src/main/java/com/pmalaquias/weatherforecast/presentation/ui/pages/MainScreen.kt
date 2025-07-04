@@ -50,7 +50,8 @@ fun MainScreen(viewModel: WeatherViewModel, modifier: Modifier = Modifier) {
                     citiesSaves = cities,
                     onGoToWeatherPage = {navController.navigate(WeatherScreen.WeatherAppScreen.name)},
                     uiState = uiState,
-                    viewModel = viewModel,
+                    onRefresh = { viewModel.fetchWeather() },
+                    //viewModel = viewModel,
                 )
             }
 
