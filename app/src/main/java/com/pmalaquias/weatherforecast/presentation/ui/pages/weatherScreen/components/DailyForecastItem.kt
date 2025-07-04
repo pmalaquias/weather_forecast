@@ -1,5 +1,6 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,14 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
+import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getConditionIcon
 import com.pmalaquias.weatherforecast.presentation.ui.utils.DateUtils
 import com.pmalaquias.weatherforecast.presentation.ui.utils.getLocale
-
 
 @Composable
 fun DailyForecastItem(dailyForecast: DailyForecast, textColor: Color) {
@@ -70,10 +71,14 @@ fun DailyForecastItem(dailyForecast: DailyForecast, textColor: Color) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = textColor
             )
-            AsyncImage(
-                model = dailyForecast.condition.iconUrl,
+            Image(
+                painter = painterResource(
+                    id = getConditionIcon(
+                        code = dailyForecast.condition.code,
+                    )
+                ),
                 contentDescription = imageContentDescription,
-                modifier = Modifier.size(48.dp)
+                modifier = Modifier.size(40.dp)
             )
         }
     }
