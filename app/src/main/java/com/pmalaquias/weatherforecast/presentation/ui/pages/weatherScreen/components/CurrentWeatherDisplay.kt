@@ -1,5 +1,6 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,16 +21,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
 import com.pmalaquias.weatherforecast.presentation.ui.pages.extensions.toBoolean
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.PreviewData
+import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getConditionIcon
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getConditionLabel
 import kotlin.math.roundToInt
 
@@ -86,8 +88,11 @@ fun CurrentTemperatureDisplay(
                 fontSize = 64.sp,
                 modifier = modifier
             )
-            AsyncImage(
-                model = icon,
+            Image(
+                painter = painterResource(getConditionIcon(
+                    code = code,
+                    isDay = isDay.toBoolean()
+                )),
                 contentDescription = iconDescription,
                 modifier = Modifier
                     .size(100.dp)
