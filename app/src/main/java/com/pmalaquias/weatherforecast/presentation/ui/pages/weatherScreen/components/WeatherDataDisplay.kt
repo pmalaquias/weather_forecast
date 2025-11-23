@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -91,7 +94,7 @@ fun WeatherDataDisplay(
     }
     Log.d(TAG_DISPLAY, "TodayForecastData is null: ${todayForecastData == null}")
 
-    //val isDay = weatherData.current.isDay == 1
+    val isDay = weatherData.current.isDay == 1
 
     val backgroundColor =
         remember(isDay) { if (isDay) daySunnyColorBrush else nightSunnyColorBrush }
@@ -117,7 +120,8 @@ fun WeatherDataDisplay(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(brush = Brush.verticalGradient(colors = backgroundColor)) // Aplica o gradiente ao Box
+            .background(brush = Brush.verticalGradient(colors = backgroundColor))// Aplica o gradiente ao Box
+            .windowInsetsPadding(WindowInsets.systemBars)
     ) {
         Scaffold(
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -239,7 +243,7 @@ fun WeatherDataDisplay(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun WeatherDataDisplayPreview() {
     AppTheme {
