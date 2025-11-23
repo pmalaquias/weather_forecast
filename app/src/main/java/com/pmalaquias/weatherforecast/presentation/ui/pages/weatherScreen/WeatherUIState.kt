@@ -1,6 +1,8 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen
 
+import com.pmalaquias.weatherforecast.data.local.db.SavedCityEntity
 import com.pmalaquias.weatherforecast.domain.models.ForecastData
+import com.pmalaquias.weatherforecast.domain.models.LocationInfo
 import com.pmalaquias.weatherforecast.domain.models.WeatherData
 
 /**
@@ -21,5 +23,10 @@ data class WeatherUIState(
     val forecastData: ForecastData? = null,
     val errorMessage: Int? = null,
     val isForecastLoading: Boolean = false,
-    val forecastErrorMessage: String? = null
+    val forecastErrorMessage: String? = null,
+
+    val searchQuery: String = "",
+    val searchResults: List<LocationInfo> = emptyList(), // Assumindo que a API de autocomplete retorna algo que pode ser mapeado para LocationInfo
+    val isSearching: Boolean = false,
+    val savedCities: List<WeatherData> = emptyList()
 )
