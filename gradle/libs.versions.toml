@@ -1,24 +1,24 @@
 [versions]
-agp = "8.11.1"
+agp = "8.13.1"
 kotlin = "2.1.0"
-coreKtx = "1.16.0"
+coreKtx = "1.17.0"
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.9.2"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.10.1"
 composeBom = "2025.06.00"
 playServicesLocation = "21.3.0"
 kotlinxCoroutinesPlayServices = "1.10.2"
 retrofit = "3.0.0"
 converterGson = "3.0.0"
-lifecycleViewmodelKtx = "2.9.2"
-lifecycleViewmodelCompose = "2.9.2"
-lifecycleRuntimeCompose = "2.9.2"
+lifecycleViewmodelKtx = "2.9.3"
+lifecycleViewmodelCompose = "2.9.3"
+lifecycleRuntimeCompose = "2.9.3"
 coilCompose = "2.7.0"
-material = "1.8.3"
+material = "1.9.0"
 materialIconsExtendedAndroid = "1.7.8"
-graphicsShapes = "1.1.0-alpha01"
+graphicsShapes = "1.1.0-beta01"
 mockk = "1.14.5"
 kotlinxCoroutinesTest = "1.10.2"
 uiTextGoogleFonts = "1.9.0-beta02"
@@ -27,11 +27,16 @@ navigationComposeJvmstubs = "2.9.0"
 material3WindowSizeClass = "1.4.0-alpha18"
 material3AdaptiveNavigationSuite = "1.4.0-alpha18"
 playServicesAppsearch = "16.0.1"
-navigationCompose = "2.9.2"
+navigationCompose = "2.9.3"
 uiDesktop = "1.7.0"
 roomCompiler = "2.7.2"
 roomCommonJvm = "2.7.2"
 roomRuntimeAndroid = "2.7.2"
+mockkVersion = "1.14.5"
+uiGraphics = "1.9.0"
+accompanistPermissions = "0.37.3"
+coreSplashscreen = "1.2.0-rc01"
+material3 = "1.3.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,14 +45,14 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2025.07.00" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version = "2025.08.01" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.4.0-alpha18" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.5.0-alpha03" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 kotlinx-coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -61,17 +66,22 @@ androidx-material-icons-extended-android = { group = "androidx.compose.material"
 androidx-graphics-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphicsShapes" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
-androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version = "1.9.0-beta03" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version = "1.9.0" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-navigation-compose-jvmstubs = { group = "androidx.navigation", name = "navigation-compose-jvmstubs", version.ref = "navigationComposeJvmstubs" }
-androidx-material3-window-size-class1 = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3WindowSizeClass" }
-androidx-material3-adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite", version.ref = "material3AdaptiveNavigationSuite" }
+androidx-material3-window-size-class1 = { group = "androidx.compose.material3", name = "material3-window-size-class", version = "1.5.0-alpha03" }
+androidx-material3-adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite", version = "1.5.0-alpha03" }
 play-services-appsearch = { group = "com.google.android.gms", name = "play-services-appsearch", version.ref = "playServicesAppsearch" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
 androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
 androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
+mockk-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "uiGraphics" }
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistPermissions" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

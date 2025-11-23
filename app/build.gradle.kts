@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.Packaging
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -12,6 +13,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.ksp)
 }
 
 android {
@@ -52,7 +54,16 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
+
+    packaging {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes +=  "META-INF/LICENSE-notice.md"
+            excludes +=  "META-INF/NOTICE.md"
+
+        }
     }
 }
 
@@ -85,6 +96,11 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.room.runtime.android)
+    implementation(libs.mockk.mockk)
+    implementation(libs.ui.graphics)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
@@ -95,4 +111,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     testImplementation(kotlin("test"))
+
+    // --- DEPENDÊNCIAS DO ROOM ---
+    implementation(libs.androidx.room.runtime.android)
+    implementation(libs.androidx.room.common.jvm) // Esta dependência pode não ser necessária diretamente
+    ksp(libs.androidx.room.compiler) // ADICIONADO: Compilador do Room usando ksp
 }
