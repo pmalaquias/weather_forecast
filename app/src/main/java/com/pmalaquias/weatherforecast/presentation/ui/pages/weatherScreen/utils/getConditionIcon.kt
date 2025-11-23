@@ -14,7 +14,7 @@ fun getConditionIcon(code: Int, isDay: Boolean = true): Int = when (code) {
     1003 -> R.drawable._116_partly_cloudy_icon
     1006 -> R.drawable._119_cloudy_icon
     1009 -> R.drawable._122_overcast_icon
-    1030 -> TODO("Implement fog icon")
+    1030 -> R.drawable._143_mist_icon
     1063 -> R.drawable._176_patchy_rain_possible_icon
     1066 -> R.drawable._179_patchy_snow_possible
     else -> R.drawable._113_sunny_icon
