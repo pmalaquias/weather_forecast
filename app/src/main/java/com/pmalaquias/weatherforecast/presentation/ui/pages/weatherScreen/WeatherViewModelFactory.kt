@@ -1,9 +1,15 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen
 
 import android.app.Application
+import android.os.Bundle
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
+import androidx.savedstate.SavedStateRegistryOwner
 import com.pmalaquias.weatherforecast.data.local.LocationProvider
+import com.pmalaquias.weatherforecast.data.local.db.AppDatabase
 import com.pmalaquias.weatherforecast.data.repositories.WeatherRepositoryImpl
 import com.pmalaquias.weatherforecast.domain.repository.WeatherRepository
 import com.pmalaquias.weatherforecast.presentation.viewModel.WeatherViewModel
@@ -18,11 +24,29 @@ import com.pmalaquias.weatherforecast.presentation.viewModel.WeatherViewModel
  *
  * @throws IllegalArgumentException if the requested ViewModel class is not [WeatherViewModel].
  */
-class WeatherViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+class WeatherViewModelFactory(
+    owner: SavedStateRegistryOwner,
+    private val application: Application,
+    defaultArgs: Bundle? = null
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+    override fun <T : ViewModel> create(
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
+    ): T {
         if (modelClass.isAssignableFrom(WeatherViewModel::class.java)) {
+
+            // Create the database instance
+            val db: AppDatabase = Room.databaseBuilder(
+                context = application.applicationContext,
+                klass = AppDatabase::class.java,
+                name = "weather-database"
+            ).build()
+
+            // Create the repository instance with the database and location provider
             val repository: WeatherRepository = WeatherRepositoryImpl(
-                LocationProvider(application.applicationContext)
+                cityDao = db.cityDao(),
+                locationProvider = LocationProvider(application.applicationContext)
             )
             @Suppress("UNCHECKED_CAST")
             return WeatherViewModel(
