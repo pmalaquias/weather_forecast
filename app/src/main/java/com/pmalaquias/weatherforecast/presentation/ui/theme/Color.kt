@@ -1,5 +1,6 @@
 package com.pmalaquias.weatherforecast.presentation.ui.theme
 
+import androidx.compose.material3.SliderColors
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF415F91)
