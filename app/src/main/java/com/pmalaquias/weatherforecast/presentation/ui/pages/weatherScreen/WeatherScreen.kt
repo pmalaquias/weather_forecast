@@ -1,5 +1,6 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,9 +36,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components.WeatherDataDisplay
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 import com.pmalaquias.weatherforecast.presentation.viewModel.WeatherViewModel
@@ -101,12 +105,12 @@ fun WeatherAppScreen(
         )
     }
 
-    Box(modifier = Modifier, contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.background(color = Color.White), contentAlignment = Alignment.Center, ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState) // Makes the Column scrollable with pull-to-refresh
-                .padding(16.dp),
+                .padding(1.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -126,14 +130,20 @@ fun WeatherAppScreen(
                 }
 
                 uiState.errorMessage != null -> {
-                    Text(
-                        text = "Erro: ${uiState.errorMessage}",
-                        color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                    // Botão para tentar novamente
-                    Button(onClick = { onRetry }, modifier = Modifier.padding(top = 8.dp)) {
-                        Text("Tentar Novamente")
+                    Column  (
+                            modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ){
+                        Text(
+                            text = "Erro: ${uiState.errorMessage}",
+                            color = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                        // Botão para tentar novamente
+                        Button(onClick = { onRetry }, modifier = Modifier.padding(top = 8.dp)) {
+                            Text("Tentar Novamente")
+                        }
                     }
                 }
 
@@ -182,6 +192,17 @@ fun WeatherAppScreen(
     //val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
     val isDay: Boolean = uiState.weatherData?.current?.isDay == 1
+
+    // System UI controller (mantenha o seu código existente para isso)
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons = true //!MaterialTheme.colorScheme.surface.isLight()
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = Color.Transparent,
+            darkIcons = useDarkIcons,
+            isNavigationBarContrastEnforced = false,
+        )
+    }
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -248,68 +269,4 @@ fun WeatherAppScreenErrorPreview() {
     }
 }
 
-//@Composable
-//fun WeatherAppScreen(viewModel: WeatherViewModel) {
-//    // Observa o uiState do ViewModel
-//    // Use collectAsStateWithLifecycle para ser mais seguro em relação ao ciclo de vida
-//    // Para isso, adicione implementation "androidx.lifecycle:lifecycle-runtime-compose:2.8.0"
-//    val uiState by viewModel.uiState.collectAsState() // ou collectAsStateWithLifecycle()
-//
-//    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-//        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-//            when {
-//                uiState.isLoading -> {
-//                    CircularProgressIndicator()
-//                }
-//                uiState.errorMessage != null -> {
-//                    Text(
-//                        text = "Erro: ${uiState.errorMessage}",
-//                        color = MaterialTheme.colorScheme.error,
-//                        modifier = Modifier.padding(16.dp)
-//                    )
-//                    // Botão para tentar novamente
-//                    Button(onClick = { viewModel.fetchWeather() }, modifier = Modifier.padding(top = 8.dp)) {
-//                        Text("Tentar Novamente")
-//                    }
-//                }
-//                uiState.weatherData != null -> {
-//                    // Exibe os dados do tempo
-//                    WeatherDataDisplay(weatherData = uiState.weatherData!!)
-//                }
-//                else -> {
-//                    // Estado inicial ou inesperado, pode mostrar um texto ou carregar
-//                    Text("Buscando dados do tempo...")
-//                    // Ou chamar viewModel.fetchWeatherData() se o init não for suficiente
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//@Composable
-//fun WeatherDataDisplay(weatherData: WeatherData) {
-//    Column(
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center,
-//        modifier = Modifier.padding(16.dp)
-//    ) {
-//        Text(text = "Local: ${weatherData.location.name}, ${weatherData.location.country}", fontSize = 20.sp)
-//        Spacer(modifier = Modifier.height(8.dp))
-//        Text(text = "${weatherData.current.tempCelcius}°C", fontSize = 48.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
-//        Spacer(modifier = Modifier.height(8.dp))
-//        Text(text = weatherData.current.condition.text, fontSize = 18.sp)
-//
-//        // Para exibir o ícone (exemplo com Coil, adicione a dependência: implementation "io.coil-kt:coil-compose:2.6.0")
-//        // AsyncImage(
-//        //     model = weatherData.current.condition.iconUrl, // Lembre-se que o mapeamento já adiciona "https:"
-//        //     contentDescription = weatherData.current.condition.text,
-//        //     modifier = Modifier.size(64.dp)
-//        // )
-//
-//        Spacer(modifier = Modifier.height(8.dp))
-//        Text(text = "Sensação: ${weatherData.current.feelslikeCelcius}°C")
-//        Text(text = "Umidade: ${weatherData.current.humidity}%")
-//        Text(text = "Vento: ${weatherData.current.windKph} km/h")
-//    }
-//}
 
