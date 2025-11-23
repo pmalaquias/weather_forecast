@@ -94,6 +94,28 @@
 
     <string name="try_again_button">Try Again</string>
     <string name="error_message_without_conection">Failed to fetch weather data. Check your connection or try again.</string>
-    <string name="standard_error_message">Error: %1$s</string> <!--WSW-->
+    <string name="standard_error_message">Error: %1$s</string>
+    <string name="error_database_read">Error reading database</string>
+    <string name="error_fetching_data">Error loading data</string>
+    <string name="saved_locations">Saved Locations</string>
+    <string name="no_saved_locations">No Place Saved</string>
+    <string name="delete_city">Delete City</string>
+    <string name="search_city_placeholder">Search city…</string>
+    <string name="error_fetching_forecast" translatable="false">erro ao fazer o fetching</string> <!--WSW-->
+
+    <!-- Strings for HomeScreen -->
+    <string name="search_placeholder">Search city…</string>
+    <string name="cd_navigate_back">Navigate back</string>
+    <string name="cd_search_icon">Search</string>
+    <string name="loading_initial_data">Loading weather data…</string>
+    <string name="home_empty_state_prompt">Find weather for your current location or search for a city.</string>
+    <string name="home_get_current_location_button">Use Current Location</string>
+    <string name="home_or_search_city">or search for a specific city.</string>
+    <string name="current_location_indicator_short">(Current)</string>
+    <string name="temperature_degrees">%1$d°</string>
+    <string name="refresh_current_location_button">Refresh Current Location</string>
+    <string name="initial_weather_prompt_home">Fetching your location or add a city via search.</string>
+    <string name="loading_weather_data">Loading weather data…</string>
+    <string name="error_search_failed">City search failed. Please try again.</string>
 
 </resources>

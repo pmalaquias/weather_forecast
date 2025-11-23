@@ -91,4 +91,10 @@
     <string name="try_again_button">Tentar Novamente</string>
     <string name="error_message_without_conection">Falha ao buscar dados do tempo. Verifique sua conexão ou tente novamente</string>
     <string name="standard_error_message">Erro: %1$s</string>
+    <string name="error_database_read">Erro ao ler o banco de dados</string>
+    <string name="error_fetching_data">Erro ao carregar os dados</string>
+    <string name="saved_locations">Locais Salvos</string>
+    <string name="no_saved_locations">Nenhum Local Salvo</string>
+    <string name="delete_city">Apagar Cidade</string>
+    <string name="search_city_placeholder">Search city...</string>
 </resources>
