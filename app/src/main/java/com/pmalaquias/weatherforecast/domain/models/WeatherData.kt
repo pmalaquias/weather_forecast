@@ -8,5 +8,6 @@ package com.pmalaquias.weatherforecast.domain.models
  */
 data class WeatherData(
     val location: LocationInfo,
+    val isFromCurrentLocation: Boolean = false,
     val current: CurrentWeather
 )
