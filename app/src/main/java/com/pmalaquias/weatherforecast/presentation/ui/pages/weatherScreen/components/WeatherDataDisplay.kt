@@ -18,6 +18,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -75,7 +77,9 @@ fun WeatherDataDisplay(
     weatherData: WeatherData,
     forecastData: ForecastData?,
     isDay: Boolean = true,
-    onBackClick: () -> Unit = {}
+    isSaved: Boolean = false,
+    onBackClick: () -> Unit = {},
+    onSaveClick: () -> Unit = {}
 ) {
     //val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val scrollBehavior: TopAppBarScrollBehavior =
@@ -145,6 +149,16 @@ fun WeatherDataDisplay(
                             color = textColor,
                             fontSize = toolbarTitleSize
                         )
+                    },
+                    actions = {
+                        IconButton(onClick = onSaveClick) {
+                            val icon = if (isSaved) Icons.Filled.Favorite else Icons.Default.FavoriteBorder
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = if (isSaved) "Remove from favorites" else "Add to favorites",
+                                tint = textColor
+                            )
+                        }
                     },
                     scrollBehavior = scrollBehavior,
                     colors = TopAppBarDefaults.topAppBarColors(
