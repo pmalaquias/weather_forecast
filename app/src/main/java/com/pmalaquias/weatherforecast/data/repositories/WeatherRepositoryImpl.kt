@@ -6,6 +6,7 @@ import com.pmalaquias.weatherforecast.data.local.db.CityDao
 import com.pmalaquias.weatherforecast.data.local.db.SavedCityEntity
 import com.pmalaquias.weatherforecast.data.remote.RetrofitClient
 import com.pmalaquias.weatherforecast.data.remote.dto.LocationDto
+import com.pmalaquias.weatherforecast.data.remote.dto.SearchLocationDto
 import com.pmalaquias.weatherforecast.data.remote.dto.WeatherApiResponseDto
 import com.pmalaquias.weatherforecast.data.remote.dto.WeatherApiService
 import com.pmalaquias.weatherforecast.data.remote.dto.forecast.ForecastApiResponseDto
@@ -176,9 +177,9 @@ class WeatherRepositoryImpl(
             if (response.isSuccessful) {
                 val responseBody = response.body()
                 Log.d("WeatherRepository", "API search response body: $responseBody") // << LOG 9
-                // Se responseBody for List<LocationDto>, você mapeia para List<LocationInfo> aqui.
+                // Se responseBody for List<SearchLocationDto>, você mapeia para List<LocationInfo> aqui.
                 // Exemplo se for DTO:
-                val mappedResults = responseBody?.map { dto -> mapLocationDtoToDomain(dto) }
+                val mappedResults = responseBody?.map { dto -> mapSearchLocationDtoToDomain(dto) }
                 Log.d("WeatherRepository", "Mapped results: ${mappedResults?.size ?: "null"} items, Data: $mappedResults") // << NOVO LOG
                 return mappedResults
             } else {
@@ -328,6 +329,18 @@ class WeatherRepositoryImpl(
             lon = dto.lon,
             timezoneId = dto.tzId,
             localtime = dto.localtime
+        )
+    }
+
+    private fun mapSearchLocationDtoToDomain(dto: SearchLocationDto): LocationInfo {
+        return LocationInfo(
+            name = dto.name,
+            region = dto.region,
+            country = dto.country,
+            lat = dto.lat,
+            lon = dto.lon,
+            timezoneId = "", // Not available in search results
+            localtime = ""   // Not available in search results
         )
     }
 }
