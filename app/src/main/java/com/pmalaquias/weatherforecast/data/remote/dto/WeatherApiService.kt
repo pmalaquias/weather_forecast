@@ -50,6 +50,6 @@ interface WeatherApiService {
     suspend fun searchCity(
         @Query("key") apiKey: String,
         @Query("q") query: String
-    ): Response<List<SearchLocationDto>> 
+    ): Response<List<SearchLocationDto>>
     // Add other API methods as needed
 }

@@ -219,12 +219,25 @@ fun WeatherAppScreen(
                 }
 
                 uiState.weatherData != null && uiState.forecastData != null -> {
+                    val isSaved = uiState.savedCities.any {
+                         it.location.name == uiState.weatherData.location.name &&
+                         it.location.region == uiState.weatherData.location.region
+                    }
+
                     // Exibe os dados do tempo
                     WeatherDataDisplay(
                         weatherData = uiState.weatherData,
                         forecastData = uiState.forecastData,
                         onBackClick = onBackClick,
                         isDay = isDay,
+                        isSaved = isSaved,
+                        onSaveClick = {
+                            if (isSaved) {
+                                viewModel.deleteCity(uiState.weatherData.location.name)
+                            } else {
+                                viewModel.saveCurrentCity()
+                            }
+                        }
                     )
                 }
 
