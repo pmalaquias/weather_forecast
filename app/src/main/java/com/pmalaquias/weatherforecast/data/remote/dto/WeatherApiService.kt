@@ -1,5 +1,6 @@
 package com.pmalaquias.weatherforecast.data.remote.dto
 
+import com.pmalaquias.weatherforecast.data.remote.dto.SearchLocationDto
 import com.pmalaquias.weatherforecast.data.remote.dto.forecast.ForecastApiResponseDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -49,6 +50,6 @@ interface WeatherApiService {
     suspend fun searchCity(
         @Query("key") apiKey: String,
         @Query("q") query: String
-    ): Response<List<LocationDto>> // A resposta é uma lista de locais
+    ): Response<List<SearchLocationDto>> 
     // Add other API methods as needed
 }
