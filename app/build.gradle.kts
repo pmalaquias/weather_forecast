@@ -1,4 +1,3 @@
-import com.android.build.api.dsl.Packaging
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -47,6 +46,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+        freeCompilerArgs = listOf(
+            "-Xjvm-default=all")
     }
     buildFeatures {
         compose = true
@@ -101,6 +102,7 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.foundation.layout)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
