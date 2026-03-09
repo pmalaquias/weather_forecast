@@ -5,7 +5,7 @@ import com.pmalaquias.weatherforecast.R
 /**
  * Returns the appropriate weather condition icon based on the provided weather code.
  *
- * @param code The weather condition code.
+ * @param code The weather condition code. 
  * @param isDay Indicates whether the icon should represent daytime conditions (default is true).
  * @return The resource ID of the corresponding weather condition icon.
  */
@@ -17,5 +17,7 @@ fun getConditionIcon(code: Int, isDay: Boolean = true): Int = when (code) {
     1030 -> R.drawable._143_mist_icon
     1063 -> R.drawable._176_patchy_rain_possible_icon
     1066 -> R.drawable._179_patchy_snow_possible
+    1183 -> R.drawable._296_light_rain_icon
+    1213 -> R.drawable._326_light_snow_icon
     else -> R.drawable._113_sunny_icon
 }
