@@ -228,6 +228,20 @@ val nightSunnyColor1 = Color(0xFF1a1a2e)
 val nightSunnyColor2 = Color(0xFF16213e)
 val nightSunnyColor3 = Color(0xFF0f3460)
 
+val dayCloudyColor1 = Color(0xFFabc0c8)
+val dayCloudyColor2 = Color(0xFFcde6f0)
+val dayCloudyColor3 = Color(0xFF84939b)
+val dayCloudyColor4 = Color(0xFF65707a)
+
+val daySnowColor1 = Color(0xFF8198aa)
+val daySnowColor2 = Color(0xFF95afc4)
+val daySnowColor3 = Color(0xFF5e728b)
+val daySnowColor4 = Color(0xFF758ea8)
+val daySnowColor5 = Color(0xFF5b6d82)
+
+
+
+
 val UvGradientColors = listOf(
     Color(0xFF289500), // Verde
     Color(0xFFf7e400), // Amarelo
@@ -250,6 +264,14 @@ val daySunnyColorBrush = listOf(
 
 val nightSunnyColorBrush = listOf(
     nightSunnyColor1, nightSunnyColor2, nightSunnyColor3
+)
+
+val dayCloudyColorBrush = listOf(
+    dayCloudyColor1, dayCloudyColor2, dayCloudyColor3, dayCloudyColor4
+)
+
+val snowColorBrush = listOf(
+    daySnowColor1, daySnowColor2, daySnowColor3, daySnowColor4, daySnowColor5
 )
 
 
