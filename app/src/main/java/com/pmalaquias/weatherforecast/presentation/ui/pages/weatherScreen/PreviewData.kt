@@ -34,7 +34,8 @@ object PreviewData {
             uv = 5.0,
             pressureMb = 1012.0,
             precipitationMm = 0.0
-        )
+        ),
+        isFromCurrentLocation = true
     )
 
     // Novo: Dados mock para ForecastData

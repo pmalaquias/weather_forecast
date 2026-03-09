@@ -39,7 +39,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components.WeatherDataDisplay
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme

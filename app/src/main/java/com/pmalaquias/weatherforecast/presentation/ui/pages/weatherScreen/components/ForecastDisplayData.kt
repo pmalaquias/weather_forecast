@@ -53,7 +53,8 @@ fun ForecastDisplayData(
 }
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true,
+    backgroundColor = 0xFF5D9BD0)
 @Composable
 fun ForecastDisplayDataPreview() {
     ForecastDisplayData(

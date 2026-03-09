@@ -1,25 +1,34 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.DailyForecast
+import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.PreviewData
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getConditionIcon
+import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 import com.pmalaquias.weatherforecast.presentation.ui.utils.DateUtils
 import com.pmalaquias.weatherforecast.presentation.ui.utils.getLocale
 
@@ -41,45 +50,72 @@ fun DailyForecastItem(dailyForecast: DailyForecast, textColor: Color) {
     Card(
         modifier = Modifier,
         colors = CardDefaults.cardColors(
-            containerColor = Color.White.copy(alpha = 0.4f),
+            containerColor = Color.Transparent,
         )
     ) {
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
-            Text(
-                text = displayDate,
-                style = MaterialTheme.typography.titleMedium,
-                color = textColor
+            // Blurred Background
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(Color.White.copy(alpha = 0.2f))
+                    .blur(16.dp)
+                    .border(1.dp, Color.White.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
             )
-            Text(
-                text = dayOfWeekShort,
-                style = MaterialTheme.typography.bodySmall,
-                color = textColor
-            )
-            Text(
-                text = stringResource(R.string.max_daily_forecast_item_body, maxTempString),
-                style = MaterialTheme.typography.bodyMedium,
-                color = textColor
-            )
-            Text(
-                text = stringResource(R.string.min_daily_forecast_item_body, minTempString),
-                style = MaterialTheme.typography.bodyMedium,
-                color = textColor
-            )
-            Image(
-                painter = painterResource(
-                    id = getConditionIcon(
-                        code = dailyForecast.condition.code,
-                    )
-                ),
-                contentDescription = imageContentDescription,
-                modifier = Modifier.size(40.dp)
-            )
+
+            // Sharp Content
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = displayDate,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = textColor
+                )
+                Text(
+                    text = dayOfWeekShort,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = textColor
+                )
+                Text(
+                    text = stringResource(R.string.max_daily_forecast_item_body, maxTempString),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = textColor
+                )
+                Text(
+                    text = stringResource(R.string.min_daily_forecast_item_body, minTempString),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = textColor
+                )
+                Image(
+                    painter = painterResource(
+                        id = getConditionIcon(
+                            code = dailyForecast.condition.code,
+                        )
+                    ),
+                    contentDescription = imageContentDescription,
+                    modifier = Modifier.size(40.dp)
+                )
+            }
         }
+    }
+}
+
+@Preview(showBackground = true,
+    wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE, backgroundColor = 0xFF2979FF
+)
+@Composable
+fun DailyForecastItemPreview() {
+    AppTheme {
+        DailyForecastItem(
+            dailyForecast = PreviewData.sampleForecastData.dailyForecasts[0],
+            textColor = MaterialTheme.colorScheme.onSurface
+        )
     }
 }
