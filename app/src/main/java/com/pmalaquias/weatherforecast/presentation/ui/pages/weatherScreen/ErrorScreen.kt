@@ -22,29 +22,25 @@ import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ErrorScreen(errorMessage: Int, onRetry: () -> Unit) {
-    val size = ButtonDefaults.MediumContainerHeight
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceAround,
-        modifier = Modifier.fillMaxSize(),
-
-        ) {
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+    ) {
         Text(
             text = stringResource(R.string.standard_error_message, stringResource(errorMessage)),
             color = MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.bodyLargeEmphasized,
+            style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(bottom = 24.dp)
         )
-        // Botão para tentar novamente
+        
         Button(
-            onClick = { onRetry },
-            shapes = ButtonDefaults.shapes(),
-            modifier = Modifier.padding(top = 8.dp),
-            contentPadding = ButtonDefaults.contentPaddingFor(size),
-            content = {Text(stringResource(R.string.try_again_button)) },
-        )
+            onClick = onRetry, // Corrigido: Agora invoca a função
+            modifier = Modifier.padding(top = 8.dp)
+        ) {
+            Text(stringResource(R.string.try_again_button))
+        }
     }
 }
 

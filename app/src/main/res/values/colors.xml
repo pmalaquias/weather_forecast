@@ -143,5 +143,6 @@
     <color name="md_theme_surfaceContainerHighest_highContrast">#C5C6CD</color>
 
 
-    <color name="day_sunny_color3">#79add4</color>>
+    <color name="day_sunny_color3">#79add4</color>
+    <color name="splash_background">#ff0099cc</color>
 </resources>
