@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -22,7 +24,7 @@ android {
     defaultConfig {
         applicationId = "com.pmalaquias.weatherforecast"
         minSdk = 29
-        targetSdk = 35
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -41,21 +43,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "11"
-        freeCompilerArgs = listOf(
-            "-Xjvm-default=all")
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+            freeCompilerArgs.add("-Xjvm-default=all")
+        }
     }
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
 
     packaging {
@@ -69,7 +68,7 @@ android {
 }
 
 dependencies {
-    implementation("io.github.kyant0:backdrop:1.0.6")
+    implementation(libs.backdrop)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.glimmer)
@@ -103,10 +102,8 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.foundation.layout)
     testImplementation(libs.junit)
-    testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -117,7 +114,6 @@ dependencies {
     testImplementation(kotlin("test"))
 
     // --- DEPENDÊNCIAS DO ROOM ---
-    implementation(libs.androidx.room.runtime.android)
-    implementation(libs.androidx.room.common.jvm) // Esta dependência pode não ser necessária diretamente
+    // Esta dependência pode não ser necessária diretamente
     ksp(libs.androidx.room.compiler) // ADICIONADO: Compilador do Room usando ksp
 }

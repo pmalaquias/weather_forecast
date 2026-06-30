@@ -4,6 +4,7 @@ import android.location.Location
 import android.util.Log
 import com.pmalaquias.weatherforecast.BuildConfig
 import com.pmalaquias.weatherforecast.data.local.LocationProvider
+import com.pmalaquias.weatherforecast.data.local.db.CityDao
 import com.pmalaquias.weatherforecast.data.remote.dto.*
 import com.pmalaquias.weatherforecast.data.remote.dto.forecast.*
 import com.pmalaquias.weatherforecast.domain.repository.WeatherRepository
@@ -22,6 +23,9 @@ import retrofit2.Response
 class WeatherRepositoryImplTest {
 
     // Dependências mockadas
+    @RelaxedMockK
+    private lateinit var cityDao: CityDao
+
     @RelaxedMockK
     private lateinit var locationProvider: LocationProvider
 
@@ -47,7 +51,7 @@ class WeatherRepositoryImplTest {
         mockkStatic(BuildConfig::class)
 
         // Instanciar o nosso repositório com as dependências mockadas
-        weatherRepository = WeatherRepositoryImpl(locationProvider, weatherApiService)
+        weatherRepository = WeatherRepositoryImpl(cityDao, locationProvider, weatherApiService)
     }
 
     @After
