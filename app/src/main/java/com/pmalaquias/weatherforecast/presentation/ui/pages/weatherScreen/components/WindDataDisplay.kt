@@ -44,19 +44,8 @@ import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.domain.models.WindInfo
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getCompassLabel
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
+import com.pmalaquias.weatherforecast.presentation.ui.utils.LIQUID_SHADER
 
-const val LIQUID_SHADER_WIND = """
-    uniform shader composable;
-    uniform float2 size;
-    uniform float time;
-
-    half4 main(float2 fragCoord) {
-        float2 uv = fragCoord / size;
-        float distortion = sin(uv.y * 1.0 + time) * cos(uv.x * 1.0 + time) * 0.005;
-        float2 distortedCoord = fragCoord + (distortion * size.x);
-        return composable.eval(distortedCoord);
-    }
-"""
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -76,7 +65,7 @@ fun WindDataCard(
     )
 
     val runtimeShader = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        remember { RuntimeShader(LIQUID_SHADER_WIND) }
+        remember { RuntimeShader(LIQUID_SHADER) }
     } else null
 
     val shape = RoundedCornerShape(16.dp)

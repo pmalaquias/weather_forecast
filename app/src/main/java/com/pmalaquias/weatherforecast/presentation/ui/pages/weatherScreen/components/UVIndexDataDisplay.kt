@@ -1,8 +1,7 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components
 
-import android.graphics.RenderEffect
+import android.graphics.RenderEffect.createRuntimeShaderEffect
 import android.graphics.RuntimeShader
-import android.graphics.Shader
 import android.os.Build
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -15,14 +14,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -45,7 +42,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -59,20 +56,9 @@ import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.utils.getUvIndexShape
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 import com.pmalaquias.weatherforecast.presentation.ui.theme.UvGradientColors
+import com.pmalaquias.weatherforecast.presentation.ui.utils.LIQUID_SHADER
 import kotlin.math.roundToInt
 
-const val LIQUID_SHADER_UV = """
-    uniform shader composable;
-    uniform float2 size;
-    uniform float time;
-
-    half4 main(float2 fragCoord) {
-        float2 uv = fragCoord / size;
-        float distortion = sin(uv.y * 1.0 + time) * cos(uv.x * 1.0 + time) * 0.005;
-        float2 distortedCoord = fragCoord + (distortion * size.x);
-        return composable.eval(distortedCoord);
-    }
-"""
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -117,7 +103,7 @@ fun UVIndexDataDisplay(
     )
 
     val runtimeShader = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        remember { RuntimeShader(LIQUID_SHADER_UV) }
+        remember { RuntimeShader(LIQUID_SHADER) }
     } else null
 
     val cardShape = RoundedCornerShape(16.dp)
@@ -139,12 +125,13 @@ fun UVIndexDataDisplay(
                 .fillMaxWidth()
                 .height(110.dp)
                 .graphicsLayer {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && runtimeShader != null) {
-                        runtimeShader.setFloatUniform("time", shaderTime)
-                        runtimeShader.setFloatUniform("size", size.width, size.height)
-                        val liquid = android.graphics.RenderEffect.createRuntimeShaderEffect(
-                            runtimeShader,
-                            "composable"
+                    if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) && (runtimeShader != null)) {
+                        with(runtimeShader) {
+                            setFloatUniform("time", shaderTime)
+                            setFloatUniform("size", size.width, size.height)
+                        }
+                        val liquid = createRuntimeShaderEffect(
+                            runtimeShader, "composable"
                         )
                         renderEffect = liquid.asComposeRenderEffect()
                     }
@@ -185,19 +172,12 @@ fun UVIndexDataDisplay(
                     )
             }
 
-            BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-                val density = LocalDensity.current
-                val indicatorSizePx = with(density) { indicatorDiameter.toPx() }
-                val fullWidthPx = with(density) { maxWidth.toPx() }
-                val rangePx = fullWidthPx - indicatorSizePx
-                val offsetXDp = with(density) { (animatedProgress * rangePx).toDp() }
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(indicatorDiameter),
-                    contentAlignment = Alignment.CenterStart
-                ) {
+            // Replaced BoxWithConstraints with a custom Layout to avoid intrinsic measurement issues with SubcomposeLayout.
+            // BoxWithConstraints uses SubcomposeLayout, which does not support intrinsic measurements.
+            // This component is used within a Grid that may request intrinsic measurements, causing a crash.
+            Layout(
+                modifier = Modifier.fillMaxWidth(),
+                content = {
                     // Barra de fundo
                     Box(
                         modifier = Modifier
@@ -206,11 +186,10 @@ fun UVIndexDataDisplay(
                             .clip(CircleShape)
                             .background(Brush.horizontalGradient(colors = UvGradientColors))
                     )
-                    
+
                     // Indicador
                     Box(
                         modifier = Modifier
-                            .offset(x = offsetXDp)
                             .size(indicatorDiameter)
                             .graphicsLayer { rotationZ = rotation },
                         contentAlignment = Alignment.Center
@@ -234,6 +213,40 @@ fun UVIndexDataDisplay(
                             modifier = Modifier.graphicsLayer { rotationZ = -rotation }
                         )
                     }
+                }
+            ) { measurables, constraints ->
+                val barMeasurable = measurables[0]
+                val indicatorMeasurable = measurables[1]
+
+                // Measure indicator first to know its size
+                val indicatorPlaceable =
+                    indicatorMeasurable.measure(constraints.copy(minHeight = 0, minWidth = 0))
+
+                // Determine the width we should take. 
+                // If the width is not bounded, we use a default or the indicator width.
+                val width =
+                    if (constraints.hasBoundedWidth) constraints.maxWidth else constraints.minWidth
+                val height = indicatorPlaceable.height
+
+                // Now measure the bar to match the determined width
+                val barPlaceable = barMeasurable.measure(
+                    constraints.copy(
+                        minWidth = width,
+                        maxWidth = width,
+                        minHeight = 0,
+                        maxHeight = height
+                    )
+                )
+
+                layout(width, height) {
+                    // Center the bar vertically relative to the indicator
+                    barPlaceable.placeRelative(0, (height - barPlaceable.height) / 2)
+
+                    // Calculate the x-offset for the indicator based on progress
+                    val rangePx = width - indicatorPlaceable.width
+                    val offsetX = (animatedProgress * rangePx).roundToInt()
+
+                    indicatorPlaceable.placeRelative(offsetX, 0)
                 }
             }
         }

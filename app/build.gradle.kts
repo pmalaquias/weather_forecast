@@ -17,7 +17,7 @@ plugins {
 
 android {
     namespace = "com.pmalaquias.weatherforecast"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.pmalaquias.weatherforecast"
@@ -69,9 +69,10 @@ android {
 }
 
 dependencies {
-    implementation("io.github.kyant0:backdrop:1.0.4")
+    implementation("io.github.kyant0:backdrop:1.0.6")
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.glimmer)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

@@ -1,9 +1,11 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.homeScreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -101,6 +103,8 @@ fun HomeScreenNew(
     
     val inputField = @Composable {
         SearchBarDefaults.InputField(
+            //modifier = Modifier.padding(top = 24.dp),
+            enabled = !(uiState.isInitialLoading && uiState.savedCities.isEmpty() && uiState.errorMessage == null),
             textFieldState = textFieldState,
             searchBarState = searchBarState,
             colors = appBarWithSearchColors.searchBarColors.inputFieldColors,
@@ -117,7 +121,8 @@ fun HomeScreenNew(
 
     Scaffold(
         topBar = {
-            AppBarWithSearch(
+            if (uiState.errorMessage == null) AppBarWithSearch(
+                contentPadding = PaddingValues(top = 16.dp),
                 scrollBehavior = scrollBehavior,
                 state = searchBarState,
                 colors = appBarWithSearchColors,
@@ -125,36 +130,38 @@ fun HomeScreenNew(
                 navigationIcon = {},
                 actions = {  },
             )
-            ExpandedFullScreenContainedSearchBar(
-                state = searchBarState,
-                inputField = inputField,
-                colors = appBarWithSearchColors.searchBarColors,
-            ) {
-                LazyColumn {
-                    items(items = uiState.searchResults) { city ->
-                        val cityName = "${city.name}, ${city.region}, ${city.country}"
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    viewModel.selectCityFromSearch(city)
-                                    scope.launch { searchBarState.animateToCollapsed() }
-                                    onGoToWeatherPage()
-                                }
-                                .padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Place,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(modifier = Modifier.width(16.dp))
-                            Text(
-                                text = cityName,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        }
+            if (uiState.errorMessage == null) {
+                ExpandedFullScreenContainedSearchBar(
+                    state = searchBarState,
+                    inputField = inputField,
+                    colors = appBarWithSearchColors.searchBarColors,
+                ) {
+                    LazyColumn {
+                        items(items = uiState.searchResults) { city ->
+                            val cityName = "${city.name}, ${city.region}, ${city.country}"
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        viewModel.selectCityFromSearch(city)
+                                        scope.launch { searchBarState.animateToCollapsed() }
+                                        onGoToWeatherPage()
+                                    }
+                                    .padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Place,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Spacer(modifier = Modifier.width(16.dp))
+                                Text(
+                                    text = cityName,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
+                            }
                     }
                 }
             }
@@ -165,7 +172,8 @@ fun HomeScreenNew(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValues),
+                        .padding(paddingValues)
+                        .background(MaterialTheme.colorScheme.surface),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -180,7 +188,7 @@ fun HomeScreenNew(
 
             uiState.errorMessage != null -> {
                 ErrorScreen(
-                    errorMessage = uiState.errorMessage!!,
+                    errorMessage = uiState.errorMessage,
                     onRetry = { onRefresh() }
                 )
             }
@@ -232,7 +240,7 @@ fun HomeScreenNew(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenNewPreview_Loading() {
     HomeScreenNew(

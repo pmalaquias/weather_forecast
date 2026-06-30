@@ -21,13 +21,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        
-        // Ativa o suporte a borda a borda no nível do sistema
         enableEdgeToEdge()
+        androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             AppTheme {
-                // Removemos o Scaffold daqui para que as telas individuais controlem seus fundos
                 MainScreen(
                     viewModel = weatherViewModel,
                     modifier = androidx.compose.ui.Modifier.fillMaxSize()

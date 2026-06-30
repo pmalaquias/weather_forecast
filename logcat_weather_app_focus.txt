@@ -1,0 +1,144 @@
+
+  03-17 13:57:42.260   613  1680 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+  --------- beginning of main
+  03-17 13:57:42.261   613  1680 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@26a7667d does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+  03-17 13:57:42.262   613  1680 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+  03-17 13:57:42.262   613  1680 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+> 03-17 13:57:42.269  1125  1182 V WindowManagerShell: Transition requested (#34): android.os.BinderProxy@9886bd7 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=9 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.pmalaquias.weatherforecast/.MainActivity } baseActivity=ComponentInfo{com.pmalaquias.weatherforecast/com.pmalaquias.weatherforecast.MainActivity} topActivity=ComponentInfo{com.pmalaquias.weatherforecast/com.pmalaquias.weatherforecast.MainActivity} origActivity=null realActivity=ComponentInfo{com.pmalaquias.weatherforecast/com.pmalaquias.weatherforecast.MainActivity} numActivities=1 lastActiveTime=1558823 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@f3b9cc4} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 128 - 0, 0) topActivityInfo=ActivityInfo{9bda7ad com.pmalaquias.weatherforecast.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=1080 topActivityLetterboxHeight=2400 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 34 }
+> 03-17 13:57:42.270   613  1680 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.pmalaquias.weatherforecast/.MainActivity} with LAUNCH_MULTIPLE from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+  03-17 13:57:42.270   613  2638 D CompatChangeReporter: Compat change id reported: 309578419; UID 10209; state: ENABLED
+  03-17 13:57:42.273  1398  1398 W SplitSelectStateCtor: Missing session instanceIds
+  03-17 13:57:42.273  1398  1398 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+  03-17 13:57:42.274  1125  1182 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=527
+  03-17 13:57:42.277   613   640 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@26a7667d does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+> 03-17 13:57:42.280  1398  1398 I TopTaskTracker: onTaskMovedToFront: (moved taskInfo to front) taskId=9, baseIntent=Intent { flg=0x10000000 cmp=com.pmalaquias.weatherforecast/.MainActivity }
+  03-17 13:57:42.284   463   463 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+> 03-17 13:57:42.286   613  2700 D CoreBackPreview: Window{3608946 u0 Splash Screen com.pmalaquias.weatherforecast}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@6429e5d, mPriority=0, mIsAnimationCallback=false}
+  03-17 13:57:42.291   613   640 I ActivityManager: Killing 3746:com.google.android.marvin.talkback/u0a167 (adj 985): empty #17
+  03-17 13:57:42.296   390   390 D Zygote  : Forked child process 8201
+> 03-17 13:57:42.300   613   650 I ActivityManager: Start proc 8201:com.pmalaquias.weatherforecast/u0a209 for next-top-activity {com.pmalaquias.weatherforecast/com.pmalaquias.weatherforecast.MainActivity}
+> 03-17 13:57:42.317  8201  8201 I weatherforecast: Late-enabling -Xcheck:jni
+  03-17 13:57:42.341   613   651 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_10167/pid_3746
+  03-17 13:57:42.347   390   390 I Zygote  : Process 3746 exited due to signal 9 (Killed)
+  03-17 13:57:42.359   613   638 D DisplayManagerService: Drop pending events for gone uid 10167
+  03-17 13:57:42.368  1125  2037 V WindowManagerShell: onTransitionReady(transaction=2632814953302)
+> 03-17 13:57:42.370   613   637 V WindowManager: Sent Transition (#34) createdAt=03-17 13:57:42.262 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=9 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.pmalaquias.weatherforecast/.MainActivity } baseActivity=ComponentInfo{com.pmalaquias.weatherforecast/com.pmalaquias.weatherforecast.MainActivity} topActivity=ComponentInfo{com.pmalaquias.weatherforecast/com.pmalaquias.weatherforecast.MainActivity} origActivity=null realActivity=ComponentInfo{com.pmalaquias.weatherforecast/com.pmalaquias.weatherforecast.MainActivity} numActivities=1 lastActiveTime=1558823 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{98fc359 Task{83f1fa5 #9 type=standard A=10209:com.pmalaquias.weatherforecast}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 128 - 0, 0) topActivityInfo=ActivityInfo{f917b1e com.pmalaquias.weatherforecast.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=1080 topActivityLetterboxHeight=2400 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 34 }
+  03-17 13:57:42.370   613   637 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+  03-17 13:57:42.370   613   637 V WindowManager:     info={id=34 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+> 03-17 13:57:42.370   613   637 V WindowManager:         {WCT{RemoteToken{98fc359 Task{83f1fa5 #9 type=standard A=10209:com.pmalaquias.weatherforecast}}} m=OPEN f=NONE leash=Surface(name=Task=9)/@0x94cfca3 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},
+  03-17 13:57:42.370   613   637 V WindowManager:         {WCT{RemoteToken{85c87bd Task{e70a9a8 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x404a4d3 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}
+  03-17 13:57:42.370   613   637 V WindowManager:     ]}
+  03-17 13:57:42.381  1125  1182 V WindowManagerShell: onTransitionReady (#34) android.os.BinderProxy@9886bd7: {id=34 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@67a3092} m=OPEN f=NONE leash=Surface(name=Task=9)/@0xd607a06 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@fbf5a63} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xde5f8c7 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}]}
+  03-17 13:57:42.382  1125  1182 V WindowManagerShell: Playing animation for (#34) android.os.BinderProxy@9886bd7@0
+  03-17 13:57:42.382  1125  1182 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@e178f4c
+  03-17 13:57:42.383  1125  1182 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultTransitionHandler@6c23c49
+  03-17 13:57:42.383  1125  1182 V WindowManagerShell: start default transition animation, info = {id=34 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@67a3092} m=OPEN f=NONE leash=Surface(name=Task=9)/@0xd607a06 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@fbf5a63} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xde5f8c7 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}]}
+  03-17 13:57:42.383  1125  1182 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@e5db719 animAttr=0x13 type=OPEN isEntrance=false
+  03-17 13:57:42.384  1125  1182 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@8f1f88c animAttr=0x12 type=OPEN isEntrance=true
+  03-17 13:57:42.385  1125  1182 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@6c23c49
+> 03-17 13:57:42.406  8201  8201 I weatherforecast: Using CollectorTypeCMC GC.
+> 03-17 13:57:42.408  8201  8201 W weatherforecast: Unexpected CPU variant for x86: x86_64.
+> 03-17 13:57:42.408  8201  8201 W weatherforecast: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+  03-17 13:57:42.409  1398  2095 D EGL_emulation: app_time_stats: avg=1038.08ms min=2.19ms max=28470.49ms count=28
+  03-17 13:57:42.412   613  2109 W UserManagerService: Requested status bar icon for non-badged user 0
+  03-17 13:57:42.413  2093  2102 I adbd    : jdwp connection from 8201
+  03-17 13:57:42.436  8201  8201 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+  03-17 13:57:42.485  1398  2095 D EGL_emulation: app_time_stats: avg=2922.97ms min=11.18ms max=28764.33ms count=10
+  03-17 13:57:42.487  8201  8201 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+  03-17 13:57:42.487  8201  8201 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+> 03-17 13:57:42.488  8201  8201 W ziparchive: Unable to open '/data/app/~~dyRtXvPMLjDSA-O8J1wC3w==/com.pmalaquias.weatherforecast-M46W2R-xC3tN7DAqMcrKDw==/base.dm': No such file or directory
+> 03-17 13:57:42.488  8201  8201 W ziparchive: Unable to open '/data/app/~~dyRtXvPMLjDSA-O8J1wC3w==/com.pmalaquias.weatherforecast-M46W2R-xC3tN7DAqMcrKDw==/base.dm': No such file or directory
+  03-17 13:57:42.686  1125  1182 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#34) android.os.BinderProxy@9886bd7@0
+  03-17 13:57:42.689   613   637 V WindowManager: Finish Transition (#34): created at 03-17 13:57:42.262 collect-started=0.045ms request-sent=5.844ms started=9.064ms ready=100.595ms sent=103.562ms finished=425.857ms
+  03-17 13:57:42.690  1398  1398 D VRI[NexusLauncherActivity]: visibilityChanged oldVisibility=true newVisibility=false
+  03-17 13:57:42.691  1125  1182 V WindowManagerShell: Track 0 became idle
+  03-17 13:57:42.692  1125  1182 V WindowManagerShell: All active transition animations finished
+  03-17 13:57:42.694   613  2109 W UserManagerService: Requested status bar icon for non-badged user 0
+  03-17 13:57:42.694   613  2109 W UserManagerService: Requested status bar icon for non-badged user 0
+  03-17 13:57:42.700  1398  1398 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=7}
+> 03-17 13:57:42.719  8201  8201 D nativeloader: Configuring clns-7 for other apk /data/app/~~dyRtXvPMLjDSA-O8J1wC3w==/com.pmalaquias.weatherforecast-M46W2R-xC3tN7DAqMcrKDw==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~dyRtXvPMLjDSA-O8J1wC3w==/com.pmalaquias.weatherforecast-M46W2R-xC3tN7DAqMcrKDw==/lib/x86_64:/data/app/~~dyRtXvPMLjDSA-O8J1wC3w==/com.pmalaquias.weatherforecast-M46W2R-xC3tN7DAqMcrKDw==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.pmalaquias.weatherforecast
+  03-17 13:57:42.726  8201  8201 D CompatChangeReporter: Compat change id reported: 202956589; UID 10209; state: ENABLED
+  03-17 13:57:42.737  8201  8201 V GraphicsEnvironment: Currently set values for:
+  03-17 13:57:42.737  8201  8201 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+  03-17 13:57:42.737  8201  8201 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+  03-17 13:57:42.738  8201  8201 V GraphicsEnvironment: Global.Settings values are invalid: number of packages: 0, number of values: 0
+  03-17 13:57:42.789  8201  8201 D CompatChangeReporter: Compat change id reported: 279646685; UID 10209; state: ENABLED
+  03-17 13:57:42.807   613  2109 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ENABLE_FAKE_FOCUS
+  03-17 13:57:42.807   613  2109 D CompatChangeReporter: Compat change id reported: 324203798; UID 10209; state: ENABLED
+  03-17 13:57:42.925  8201  8201 D CompatChangeReporter: Compat change id reported: 309578419; UID 10209; state: ENABLED
+  03-17 13:57:43.022  8201  8201 W HWUI    : Unknown dataspace 0
+> 03-17 13:57:43.553  8201  8206 I weatherforecast: Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+> 03-17 13:57:43.679  8201  8201 W weatherforecast: Accessing hidden method Landroid/os/SystemProperties;->addChangeCallback(Ljava/lang/Runnable;)V (unsupported, reflection, allowed)
+  03-17 13:57:44.343   613  2109 W AppOps  : Noting op not finished: uid 10144 pkg com.google.android.gms code 113 startTime of in progress event=1773754713239
+  03-17 13:57:44.351   613  2700 W AppOps  : Noting op not finished: uid 10144 pkg com.google.android.gms code 113 startTime of in progress event=1773754713239
+  03-17 13:57:44.359   613  2700 W AppOps  : Noting op not finished: uid 10144 pkg com.google.android.gms code 79 startTime of in progress event=1773754713565
+  03-17 13:57:44.366   613  1680 W AppOps  : Noting op not finished: uid 10144 pkg com.google.android.gms code 113 startTime of in progress event=1773754713239
+  03-17 13:57:44.371   613  1680 W AppOps  : Noting op not finished: uid 10144 pkg com.google.android.gms code 113 startTime of in progress event=1773754713239
+  03-17 13:57:44.380  6844  6922 I ActivityScheduler: nextTriggerTime: 1799035, in 238100ms, detectorType: 39, FULL_TYPE alarmWindowMillis: 80000
+> 03-17 13:57:44.663   613  2700 D CoreBackPreview: Window{367b2da u0 com.pmalaquias.weatherforecast/com.pmalaquias.weatherforecast.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@80629df, mPriority=0, mIsAnimationCallback=false}
+  03-17 13:57:44.935  6844  7119 I FontLog : (REDACTED) Received query %s, URI %s
+  03-17 13:57:44.935  6844  7119 I FontLog : (REDACTED) Query [%s] resolved to %s
+  03-17 13:57:44.937  6844  7119 I FontLog : (REDACTED) Fetch %s end status %s
+  03-17 13:57:45.150  8201  8217 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+  03-17 13:57:45.151  8201  8217 I EGL_emulation: Opening libGLESv2_emulation.so
+  03-17 13:57:45.161  8201  8217 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+  03-17 13:57:45.161  8201  8217 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+  03-17 13:57:45.221   180   180 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+  03-17 13:57:45.222  8201  8217 I Gralloc4: mapper 4.x is not supported
+> 03-17 13:57:45.330   613   637 W ziparchive: Unable to open '/data/app/~~dyRtXvPMLjDSA-O8J1wC3w==/com.pmalaquias.weatherforecast-M46W2R-xC3tN7DAqMcrKDw==/base.dm': No such file or directory
+> 03-17 13:57:45.331   613   637 I ActivityTaskManager: Displayed com.pmalaquias.weatherforecast/.MainActivity for user 0: +3s70ms
+  03-17 13:57:45.338  8201  8214 I HWUI    : Davey! duration=2514ms; Flags=1, FrameTimelineVsyncId=33767, IntendedVsync=1559371517804, Vsync=1559571517796, InputEventId=0, HandleInputStart=1559588988100, AnimationStart=1559589013700, PerformTraversalsStart=1559589369000, DrawStart=1561808097300, FrameDeadline=1559388184470, FrameInterval=1559587929600, FrameStartTime=16666666, SyncQueued=1561849340600, SyncStart=1561852832300, IssueDrawCommandsStart=1561854323800, SwapBuffers=1561876039300, FrameCompleted=1561889146100, DequeueBufferDuration=999000, QueueBufferDuration=437200, GpuCompleted=1561889146100, SwapBuffersCompleted=1561881651400, DisplayPresentTime=0, CommandSubmissionCompleted=1561876039300, 
+  03-17 13:57:45.356  8201  8201 I Choreographer: Skipped 128 frames!  The application may be doing too much work on its main thread.
+> 03-17 13:57:45.406   613   773 I ImeTracker: com.pmalaquias.weatherforecast:2966be53: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+> 03-17 13:57:45.406   613   773 I ImeTracker: com.pmalaquias.weatherforecast:2966be53: onCancelled at PHASE_SERVER_SHOULD_HIDE
+  03-17 13:57:45.409  6844  8075 I FontLog : (REDACTED) Received query %s, URI %s
+  03-17 13:57:45.409  6844  8075 I FontLog : (REDACTED) Query [%s] resolved to %s
+  03-17 13:57:45.411  5817  5817 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():3157 
+  03-17 13:57:45.411  6844  8075 I FontLog : (REDACTED) Fetch %s end status %s
+  03-17 13:57:45.415  6844  8075 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+  03-17 13:57:45.418  5817  5817 I GoogleInputMethodService: GoogleInputMethodService.updateDeviceLockedStatus():2248 repeatCheckTimes = 0, locked = false
+> 03-17 13:57:45.418  5817  5817 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1986 onStartInput(EditorInfo{EditorInfo{packageName=com.pmalaquias.weatherforecast, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+  03-17 13:57:45.420  5817  5817 I GoogleInputMethodService: GoogleInputMethodService.updateDeviceLockedStatus():2248 repeatCheckTimes = 1, locked = false
+  03-17 13:57:45.421  5817  5817 I AndroidIME: InputBundleManager.loadActiveInputBundleId():450 loadActiveInputBundleId: und-Latn-x-password, password
+> 03-17 13:57:45.425   613  1709 W PackageConfigPersister: App-specific configuration not found for packageName: com.pmalaquias.weatherforecast and userId: 0
+  03-17 13:57:45.435  6844  8075 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+  03-17 13:57:45.441  8201  8214 I HWUI    : Davey! duration=2184ms; Flags=0, FrameTimelineVsyncId=33820, IntendedVsync=1559771517788, Vsync=1561904851036, InputEventId=0, HandleInputStart=1561914787000, AnimationStart=1561914807800, PerformTraversalsStart=1561923921700, DrawStart=1561924027300, FrameDeadline=1561921517702, FrameInterval=1561911686200, FrameStartTime=16666666, SyncQueued=1561941720500, SyncStart=1561941863300, IssueDrawCommandsStart=1561941924100, SwapBuffers=1561942364500, FrameCompleted=1561956060800, DequeueBufferDuration=24900, QueueBufferDuration=3281200, GpuCompleted=1561956060800, SwapBuffersCompleted=1561949750400, DisplayPresentTime=0, CommandSubmissionCompleted=1561942364500, 
+  03-17 13:57:45.495  1398  1398 D BaseDepthController: setSurface:
+  03-17 13:57:45.495  1398  1398 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+  03-17 13:57:45.495  1398  1398 D BaseDepthController: 	mSurface: null
+  03-17 13:57:45.660   613   651 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_1000/pid_1320
+  03-17 13:57:45.667   390   390 D Zygote  : Forked child process 8241
+  03-17 13:57:45.667   390   390 I Zygote  : Process 6123 exited due to signal 9 (Killed)
+  03-17 13:57:45.672   613   650 I ActivityManager: Start proc 8241:com.android.settings/1000 for content provider {com.android.settings/com.android.settings.slices.SettingsSliceProvider}
+  03-17 13:57:45.698  1125  1223 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda11@6f91f65
+> 03-17 13:57:45.701   613  2638 W InputManager-JNI: Input channel object '3608946 Splash Screen com.pmalaquias.weatherforecast (client)' was disposed without first being removed with the input manager!
+> 03-17 13:57:45.702   613  1709 D CoreBackPreview: Window{3608946 u0 Splash Screen com.pmalaquias.weatherforecast EXITING}: Setting back callback null
+  03-17 13:57:45.714  8241  8241 I ndroid.settings: Using CollectorTypeCMC GC.
+  03-17 13:57:45.714  8241  8241 W ndroid.settings: Unexpected CPU variant for x86: x86_64.
+  03-17 13:57:45.714  8241  8241 W ndroid.settings: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+  03-17 13:57:45.716  8241  8241 E ndroid.settings: Not starting debugger since process cannot load the jdwp agent.
+  03-17 13:57:45.725  8241  8241 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+  03-17 13:57:47.999   613  1047 W IPCThreadState: Sending oneway calls to frozen process.
+  03-17 13:57:47.999   613  1047 W IPCThreadState: Sending oneway calls to frozen process.
+  03-17 13:57:47.999  4057  4102 I BugleRcsEngine: Connected state: [1], networkType: [WIFI] [CONTEXT thread_id=59 ]
+  03-17 13:57:48.000  4057  4119 I BugleRcsEngine: handleMessage processing message:[NOTIFY_UPTIME_IGNORE_STATE_CHANGED] with [non-null]:RcsEngineImpl reference [CONTEXT log_prefix="RcsEngineImpl[DUAL_REG]:[d924374a-91dd]>Handler" thread_id=62 ]
+  03-17 13:57:48.007  4057  4119 I BugleRcsEngine: No RCS Configuration was found in Bugle for simID: redacted-pii:sim_id[chars:20,last3:897] [CONTEXT log_prefix="ProvisioningEngineDataRetriever" thread_id=62 ]
+> 03-17 13:57:48.147  8201  8267 D ProfileInstaller: Installing profile for com.pmalaquias.weatherforecast
+  03-17 13:57:49.502   613   753 D ActivityManager: freezing 5865 com.android.vending
+  03-17 13:57:49.504   613  1047 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+  03-17 13:57:49.507   613  1047 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+  03-17 13:57:49.507   613  1047 D InetDiagMessage: Destroyed live tcp sockets for uids={10141} in 3ms
+  03-17 13:57:49.654  3120  4486 I artd    : Dex parent of /data/app/~~ffda-wQEUpeYyV2rAoxU2w==/com.google.android.gms-Tw0DnobreUL2OtCM0eAdXw==/base.apk is not writable: Permission denied
+  03-17 13:58:35.730   613  2116 D WifiNl80211Manager: Scan result ready event
+  03-17 13:58:35.730   613  2116 D WifiNative: Scan result ready event
+  03-17 13:58:35.735   613  1040 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+  03-17 13:58:35.738  6844  8286 I FrewleTileCacheManagerV: (REDACTED) Fetched %d AP models from cache
+  03-17 13:58:35.745  6844  8286 W GLSUser : [DeviceKeyStore] Cannot load key: Device key file not found.
+> 03-17 13:58:35.751  5933  5933 D ActivityThread: Package [com.pmalaquias.weatherforecast] reported as REPLACED, but missing application info. Assuming REMOVED.
+> 03-17 13:58:35.752  5933  5933 D ActivityThread: Package [com.pmalaquias.weatherforecast] reported as REPLACED, but missing application info. Assuming REMOVED.
+  03-17 13:58:35.752   613  2116 D ActivityManager: sync unfroze 5933 com.google.android.gms.unstable for 6
+  03-17 13:58:35.832   613  2116 D CompatChangeReporter: Compat change id reported: 297989574; UID 1000; state: ENABLED
+  03-17 13:58:35.842  5933  5965 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+  03-17 13:58:35.842  5933  5965 W libc    : Access denied finding property "service.adb.tls.port"
+  03-17 13:58:35.837  5933  5933 W binder:5933_1: type=1400 audit(0.0:193): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=314 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+

@@ -1,6 +1,7 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.components
 
 
+import android.graphics.RenderEffect.createRuntimeShaderEffect
 import android.graphics.RuntimeShader
 import android.os.Build
 import androidx.compose.animation.core.LinearEasing
@@ -13,6 +14,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalFlexBoxApi
+import androidx.compose.foundation.layout.ExperimentalGridApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -54,6 +57,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -70,22 +74,13 @@ import com.pmalaquias.weatherforecast.presentation.ui.theme.dayCloudyColorBrush
 import com.pmalaquias.weatherforecast.presentation.ui.theme.daySunnyColorBrush
 import com.pmalaquias.weatherforecast.presentation.ui.theme.nightSunnyColorBrush
 import com.pmalaquias.weatherforecast.presentation.ui.theme.snowColorBrush
+import com.pmalaquias.weatherforecast.presentation.ui.utils.LIQUID_SHADER
 
-const val LIQUID_SHADER = """
-    uniform shader composable;
-    uniform float2 size;
-    uniform float time;
 
-    half4 main(float2 fragCoord) {
-        float2 uv = fragCoord / size;
-        // Distorção senoidal para simular movimento de fluido
-        float distortion = sin(uv.y * 12.0 + time) * cos(uv.x * 10.0 + time) * 0.005;
-        float2 distortedCoord = fragCoord + (distortion * size.x);
-        return composable.eval(distortedCoord);
-    }
-"""
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class,
+    ExperimentalFlexBoxApi::class, ExperimentalGridApi::class
+)
 @Composable
 fun WeatherDataDisplay(
     weatherData: WeatherData,
@@ -107,22 +102,22 @@ fun WeatherDataDisplay(
     val backgroundColor =
         remember(isDayCalculated) {
             if (isDayCalculated) {
-                if (conditionCode == 1006 || conditionCode == 1009 || conditionCode == 1030) dayCloudyColorBrush
-                else if (conditionCode == 1066 || conditionCode == 1114 || conditionCode == 1210 || conditionCode == 1213 || conditionCode == 1216 || conditionCode == 1219 || conditionCode == 1222 || conditionCode == 1225 || conditionCode == 1255 || conditionCode == 1258 || conditionCode == 1279 || conditionCode == 1282)
-                    snowColorBrush
-                else
-                    daySunnyColorBrush
+                when (conditionCode) {
+                    1006, 1009, 1030 -> dayCloudyColorBrush
+                    1066, 1114, 1210, 1213, 1216, 1219, 1222, 1225, 1255, 1258, 1279, 1282 -> snowColorBrush
+                    else -> daySunnyColorBrush
+                }
             } else nightSunnyColorBrush
         }
 
 
-    val textColor: Color = remember(isDayCalculated) { if (isDayCalculated) Color.Black else Color.White }
+    val textColor: Color =
+        remember(isDayCalculated) { if (isDayCalculated) Color.Black else Color.White }
 
     val systemUiController = rememberSystemUiController()
-    val useDarkIcons = isDayCalculated
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color.Transparent, darkIcons = useDarkIcons,
+            color = Color.Transparent, darkIcons = isDayCalculated,
             isNavigationBarContrastEnforced = false
         )
     }
@@ -158,24 +153,29 @@ fun WeatherDataDisplay(
                 MediumFlexibleTopAppBar(
                     modifier = Modifier.fillMaxWidth(),
                     navigationIcon = {
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.padding(start = 8.dp)) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.padding(start = 8.dp)
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .size(40.dp)
                                     .graphicsLayer {
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && runtimeShader != null) {
-                                            runtimeShader.setFloatUniform("time", time)
-                                            runtimeShader.setFloatUniform(
-                                                "size",
-                                                size.width,
-                                                size.height
-                                            )
-                                            val liquid =
-                                                android.graphics.RenderEffect.createRuntimeShaderEffect(
-                                                    runtimeShader,
-                                                    "composable"
+                                            with(runtimeShader) {
+                                                setFloatUniform("time", time)
+                                                setFloatUniform(
+                                                    "size",
+                                                    size.width,
+                                                    size.height
                                                 )
-                                            renderEffect = liquid.asComposeRenderEffect()
+                                            }
+                                            val liquid = createRuntimeShaderEffect(
+                                                /* shader = */ runtimeShader,
+                                                /* uniformShaderName = */ "composable"
+                                            ).also {
+                                                renderEffect = it.asComposeRenderEffect()
+                                            }
                                         }
                                         clip = true
                                         shape = CircleShape
@@ -215,20 +215,32 @@ fun WeatherDataDisplay(
                                 style = MaterialTheme.typography.titleLarge,
                                 color = textColor,
                                 fontSize = toolbarTitleSize,
+                                textAlign = TextAlign.Center
                             )
                         }
                     },
                     titleHorizontalAlignment = Alignment.CenterHorizontally,
                     actions = {
-                        Box (contentAlignment = Alignment.Center, modifier = Modifier.padding(end = 8.dp)){
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.padding(end = 8.dp)
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .size(40.dp)
                                     .graphicsLayer {
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && runtimeShader != null) {
                                             runtimeShader.setFloatUniform("time", time)
-                                            runtimeShader.setFloatUniform("size", size.width, size.height)
-                                            val liquid = android.graphics.RenderEffect.createRuntimeShaderEffect(runtimeShader, "composable")
+                                            runtimeShader.setFloatUniform(
+                                                "size",
+                                                size.width,
+                                                size.height
+                                            )
+                                            val liquid =
+                                                createRuntimeShaderEffect(
+                                                    runtimeShader,
+                                                    "composable"
+                                                )
                                             renderEffect = liquid.asComposeRenderEffect()
                                         }
                                         clip = true
@@ -291,6 +303,7 @@ fun WeatherDataDisplay(
 
                     Spacer(modifier = Modifier.height(24.dp))
 
+
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -303,7 +316,7 @@ fun WeatherDataDisplay(
                         )
 
                         PressureCard(
-                            pressure = weatherData.current.pressureMb, 
+                            pressure = weatherData.current.pressureMb,
                             textColor = textColor,
                             modifier = Modifier.weight(1f)
                         )
@@ -317,12 +330,12 @@ fun WeatherDataDisplay(
                             windInfo = WindInfo(
                                 speed = weatherData.current.windKph,
                                 direction = weatherData.current.windDir
-                            ), 
+                            ),
                             textColor = textColor,
                             modifier = Modifier.weight(1f)
                         )
                         PrecipitationCard(
-                            rainfall = weatherData.current.precipitationMm, 
+                            rainfall = weatherData.current.precipitationMm,
                             textColor = textColor,
                             //difier = Modifier.weight(1f)
                         )
@@ -334,7 +347,7 @@ fun WeatherDataDisplay(
                     ) {
 
                         UVIndexDataDisplay(
-                            uvIndex = weatherData.current.uv, 
+                            uvIndex = weatherData.current.uv,
                             textColor = textColor,
                             modifier = Modifier.weight(1f)
                         )

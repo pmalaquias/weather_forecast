@@ -1,5 +1,6 @@
 package com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +26,9 @@ fun ErrorScreen(errorMessage: Int, onRetry: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.errorContainer),
     ) {
         Text(
             text = stringResource(R.string.standard_error_message, stringResource(errorMessage)),
@@ -34,10 +37,11 @@ fun ErrorScreen(errorMessage: Int, onRetry: () -> Unit) {
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 24.dp)
         )
-        
+
         Button(
             onClick = onRetry, // Corrigido: Agora invoca a função
             modifier = Modifier.padding(top = 8.dp)
+
         ) {
             Text(stringResource(R.string.try_again_button))
         }

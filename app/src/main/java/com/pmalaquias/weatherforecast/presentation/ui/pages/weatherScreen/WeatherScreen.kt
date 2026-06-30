@@ -122,7 +122,10 @@ fun WeatherAppScreen(
 
                 uiState.isInitialLoading -> {
                     Box(
-                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.surface),
+                        contentAlignment = Alignment.Center
                     ) {
                         LoadingIndicator()
                     }
@@ -130,7 +133,9 @@ fun WeatherAppScreen(
 
                 uiState.errorMessage != null -> {
                     Column  (
-                            modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.errorContainer),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ){
@@ -140,8 +145,14 @@ fun WeatherAppScreen(
                             modifier = Modifier.padding(16.dp)
                         )
                         // Botão para tentar novamente
-                        Button(onClick = { onRetry }, modifier = Modifier.padding(top = 8.dp)) {
-                            Text("Tentar Novamente")
+                        Button(onClick = { onRetry },
+                            modifier = Modifier.padding(top = 8.dp),
+                            colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.error
+                            )
+                        ) {
+                            Text("Tentar Novamente",
+                                color = MaterialTheme.colorScheme.onError )
                         }
                     }
                 }

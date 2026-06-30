@@ -50,19 +50,8 @@ import com.pmalaquias.weatherforecast.R
 import com.pmalaquias.weatherforecast.presentation.ui.pages.weatherScreen.PreviewData
 import com.pmalaquias.weatherforecast.presentation.ui.theme.AppTheme
 import com.pmalaquias.weatherforecast.presentation.ui.theme.daySunnyColor1
+import com.pmalaquias.weatherforecast.presentation.ui.utils.LIQUID_SHADER
 
-const val LIQUID_SHADER_HUMIDITY = """
-    uniform shader composable;
-    uniform float2 size;
-    uniform float time;
-
-    half4 main(float2 fragCoord) {
-        float2 uv = fragCoord / size;
-        float distortion = sin(uv.y * 1.0 + time) * cos(uv.x * 1.0 + time) * 0.005;
-        float2 distortedCoord = fragCoord + (distortion * size.x);
-        return composable.eval(distortedCoord);
-    }
-"""
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -93,7 +82,7 @@ fun HumidityDataDisplay(
     )
 
     val runtimeShader = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        remember { RuntimeShader(LIQUID_SHADER_HUMIDITY) }
+        remember { RuntimeShader(LIQUID_SHADER) }
     } else null
 
     val cardShape = RoundedCornerShape(16.dp)
